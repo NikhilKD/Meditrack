@@ -1,19 +1,5 @@
 {% extends 'base.html' %}
 {% block body %}
-
-<!-- user_name=user,
-name=request.form.get("fname"),
-address=request.form.get("faddress"),
-city=request.form.get("fcity"),
-state=request.form.get("fstate"),
-pincode=request.form.get("fpincode"),
-gender=request.form.get("fgender"),
-date=request.form.get("fdate"),
-blood_group=request.form.get("fblood"),
-aadhar=request.form.get("faadhar"),
-job=request.form.get("fjob") -->
-
-<!-- Main -->
     <div class="main">
         <h2>YOUR PROFILE</h2>
         <div class="card">
@@ -23,57 +9,57 @@ job=request.form.get("fjob") -->
                         <tr>
                             <td>Name</td>
                             <td>:</td>
-                            <td>Nikhil Kumar Das</td>
+                            <td>{{user.name}}</td>
                         </tr>
                         <tr>
                             <td>Email</td>
                             <td>:</td>
-                            <td>nikhilkd@gmail.com</td>
+                            <td>{{user.user_name}}</td>
                         </tr>
                         <tr>
                             <td>Address</td>
                             <td>:</td>
-                            <td>50 Rishi East City</td>
+                            <td>{{user.address}}</td>
                         </tr>
                         <tr>
                             <td>City</td>
                             <td>:</td>
-                            <td>Bhopal</td>
+                            <td>{{user.city}}</td>
                         </tr>
                         <tr>
                             <td>State</td>
                             <td>:</td>
-                            <td>MP</td>
+                            <td>{{user.state}}</td>
                         </tr>
                         <tr>
                             <td>Pincode</td>
                             <td>:</td>
-                            <td>12345</td>
+                            <td>{{user.pincode}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td>Male</td>
+                            <td>{{user.gender}}</td>
                         </tr>
                         <tr>
                             <td>DOB</td>
                             <td>:</td>
-                            <td>03/03/2002</td>
+                            <td>{{user.date}}</td>
                         </tr>
                         <tr>
                             <td>Job</td>
                             <td>:</td>
-                            <td>Software Engineer</td>
+                            <td>{{user.job}}</td>
                         </tr>
                         <tr>
                             <td>Blood Group</td>
                             <td>:</td>
-                            <td>B+</td>
+                            <td>{{user.blood_group}}</td>
                         </tr>
                         <tr>
                             <td>Aadhar Card</td>
                             <td>:</td>
-                            <td>123456789</td>
+                            <td>{{user.aadhar}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -36,7 +36,7 @@ ul li{
 }
 .sidebar .logo-details .logo_name{
   color: #fff;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 600;
   opacity: 0;
   transition: all 0.5s ease;
@@ -269,12 +269,11 @@ body {
 
 /* Main */
 .main {
-  margin-top: 3%;
-  margin-left: 20%;
-  align-items: center;
+  position: absolute;
+  top: 3%;
+  left: 19%;
   font-size: 28px;
-  padding: 0 10px;
-  width: 58%;
+  width: 70%;
 }
 
 .main h2 {

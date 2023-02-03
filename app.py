@@ -91,7 +91,7 @@ def dashboard():
     return render_template('/dashboard/index.html',user=x,img=img)
 
 
-@app.route("/signUp",methods =["POST"])
+@app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
        global user
@@ -103,7 +103,7 @@ def signUp():
        return redirect('/register')
     return render_template('/login/index.html')
 
-@app.route("/signIn",methods =["POST"])
+@app.route("/signIn",methods =["GET","POST"])
 def signIn():
     if request.method == "POST":
         global user
@@ -155,6 +155,11 @@ def upload():
 def download(uid):
     x = Data.query.filter_by(uid=uid).first()
     return send_file(BytesIO(x.img), download_name=x.name,as_attachment=True)
+
+@app.route('/profile')
+def profile():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/profile/index.html',user=x)
 
 if __name__ == "__main__":
     app.run(host="localhost", port=4000, debug=True)
