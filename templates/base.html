@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class='bx bxl-c-plus-plus icon'></i>
+          <div class="logo_name">Meditrack</div>
+          <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="/dashboard">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+           <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+         <a href="#">
+           <i class='bx bx-user' ></i>
+           <span class="links_name">Profile</span>
+         </a>
+         <span class="tooltip">Profile</span>
+       </li>
+       <li>
+         <a href="/prediction">
+           <i class='bx bx-pie-chart-alt-2' ></i>
+           <span class="links_name">Prediction</span>
+         </a>
+         <span class="tooltip">Prediction</span>
+       </li>
+       <li>
+         <a href="/add_report">
+           <i class='bx bx-add-to-queue' ></i>
+           <span class="links_name">Add Report</span>
+         </a>
+         <span class="tooltip">Add Report</span>
+       </li>
+       <li>
+        <a href="#">
+          <i class='bx bx-folder' ></i>
+          <span class="links_name">Reports</span>
+        </a>
+        <span class="tooltip">Reports</span>
+      </li>
+       <li>
+        <a href="#">
+            <i class='bx bx-file' ></i>
+          <span class="links_name">Certificates</span>
+        </a>
+        <span class="tooltip">Certificates</span>
+      </li>
+       <li>
+         <a href="#">
+           <i class='bx bx-cog' ></i>
+           <span class="links_name">Setting</span>
+         </a>
+         <span class="tooltip">Setting</span>
+       </li>
+       <li class="profile">
+           <div class="profile-details">
+             <div class="name_job">
+              <div class="name">{{ user.name }}</div>
+              <div class="job">{{user.user_name}}</div>
+             </div>
+           </div>
+           <i class='bx bx-log-out' id="log_out" ></i>
+       </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      {% block body %}
+      
+      {% endblock body %}
+    </section>
+
+    <!-- <script src="app.js"></script> -->
+    <script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+  
+    closeBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("open");
+      menuBtnChange();
+    });
+  
+    searchBtn.addEventListener("click", ()=>{ 
+      sidebar.classList.toggle("open");
+      menuBtnChange(); 
+    });
+  
+    function menuBtnChange() {
+     if(sidebar.classList.contains("open")){
+       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+     }else {
+       closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
+     }
+    }
+    </script>
+  </body>
+</html>

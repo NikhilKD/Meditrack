@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        <form action="/result" enctype="multipart/form-data" method="POST">
+            <div class="form-group" >
+                <input type="file" class="form-control-file" name="file">
+                <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
+            </div>
+        </form>
+    </div>
+{% endblock body %}

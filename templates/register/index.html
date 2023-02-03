@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditrack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register/style.css') }}"/>
+
+</head>
+<body>
+    <form action="{{ url_for('register') }}" method="POST">
+    <div class="row">
+        <h4>Basic details</h4>
+        <div class="input-group input-group-icon">
+            <input type="text" name="fname" placeholder="Full Name" class="form-control"/>
+            <div class="input-icon"><i class="fa fa-user"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <input type="text" name="faddress" placeholder="Address"/>
+            <div class="input-icon"><i class="fa fa-envelope"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <input type="text" name="fcity" placeholder="City"/>
+            <div class="input-icon"><i class="fa fa-key"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <input type="text" name="fstate" placeholder="State"/>
+            <div class="input-icon"><i class="fa fa-envelope"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <input type="text" name="fpincode" placeholder="Pincode"/>
+            <div class="input-icon"><i class="fa fa-key"></i></div>
+        </div>
+        <div class="col-half">
+            <h4>Gender</h4>
+            <div class="input-group">
+            <input id="gender-male" type="radio" name="fgender" value="male"/>
+            <label for="gender-male">Male</label>
+            <input id="gender-female" type="radio" name="fgender" value="female"/>
+            <label for="gender-female">Female</label>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <h4>Personal Details</h4>
+            <div class="input-group input-group-icon">
+                <input type="text" name="fdate" placeholder="Date of Birth"/>
+                <div class="input-icon"><i class="fa fa-key"></i></div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="input-group input-group-icon">
+            <input type="text" name="fblood" placeholder="Blood group"/>
+            <div class="input-icon"><i class="fa fa-envelope"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <input type="text" name="faadhar" placeholder="Aadhar Card Number"/>
+            <div class="input-icon"><i class="fa fa-credit-card"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <input type="text" name="family_member" placeholder="Family Members"/>
+            <div class="input-icon"><i class="fa fa-key"></i></div>
+        </div>
+        <div class="input-group input-group-icon">
+            <div class="input-group input-group-icon">
+            <input type="text" name="fjob" placeholder="Job"/>
+            <div class="input-icon"><i class="fa fa-user"></i></div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <h4>Terms and Conditions</h4>
+        <div class="input-group">
+            <input id="terms" type="checkbox"/>
+            <label for="terms">I accept the terms and conditions for signing up to this service, and hereby confirm I have read the privacy policy.</label>
+        </div>
+        </div>
+        <div class="action">
+            <button type="submit" class="btn mt-4">Submit</button>
+        </div>
+    </form>
+</body>
+</html>
