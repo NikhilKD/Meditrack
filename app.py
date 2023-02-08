@@ -11,7 +11,6 @@ app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
 app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db'}
 
 db=SQLAlchemy(app)
-db.init_app(app)
 app.config['UPLOAD_FOLDER'] = ''
 
 config={
@@ -56,33 +55,13 @@ with app.app_context():
 
 user="Nikhil"
 
-
+# Home Page
 @app.route("/")
 def home():
     return render_template('/home/index.html')
 
-@app.route("/register",methods =["GET", "POST"])
-def register():
-    if request.method =='POST':
-        global user
-        record=Record(
-            user_name=user,
-            name=request.form.get("fname"),
-            address=request.form.get("faddress"),
-            city=request.form.get("fcity"),
-            state=request.form.get("fstate"),
-            pincode=request.form.get("fpincode"),
-            gender=request.form.get("fgender"),
-            date=request.form.get("fdate"),
-            blood_group=request.form.get("fblood"),
-            aadhar=request.form.get("faadhar"),
-            job=request.form.get("fjob")
-        )
-        db.session.add(record)
-        db.session.commit()
-        return redirect('/dashboard')
-    return render_template('/register/index.html')
 
+# Dashbord with records of images
 @app.route("/dashboard")
 def dashboard():
     global user
@@ -90,7 +69,12 @@ def dashboard():
     img=Data.query.filter_by(user_name=user).all()
     return render_template('/dashboard/index.html',user=x,img=img)
 
+@app.route('/download/<string:uid>')
+def download(uid):
+    x = Data.query.filter_by(uid=uid).first()
+    return send_file(BytesIO(x.img), download_name=x.name,as_attachment=True)
 
+# Login Page
 @app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
@@ -115,26 +99,32 @@ def signIn():
         return redirect('/dashboard')
     return render_template('/login/index.html')
 
-@app.route('/add_report')
-def add_report():
-    x = Record.query.filter_by(user_name=user).first()
-    return render_template('/upload/index.html',user=x)
 
-@app.route('/result',methods=['POST'])
-def result():
-    if request.method == 'POST':
-        pic=request.files['file']
-        pic.save('image123.jpg')
-        if not pic:
-            return "<h2> No Pic Uploaded</h2>"
-    x=ans()
-    return x
+# register page
+@app.route("/register",methods =["GET", "POST"])
+def register():
+    if request.method =='POST':
+        global user
+        record=Record(
+            user_name=user,
+            name=request.form.get("fname"),
+            address=request.form.get("faddress"),
+            city=request.form.get("fcity"),
+            state=request.form.get("fstate"),
+            pincode=request.form.get("fpincode"),
+            gender=request.form.get("fgender"),
+            date=request.form.get("fdate"),
+            blood_group=request.form.get("fblood"),
+            aadhar=request.form.get("faadhar"),
+            job=request.form.get("fjob")
+        )
+        db.session.add(record)
+        db.session.commit()
+        return redirect('/dashboard')
+    return render_template('/register/index.html')
 
-@app.route('/prediction')
-def prediction():
-    x = Record.query.filter_by(user_name=user).first()
-    return render_template('/prediction/index.html',user=x)
 
+# upload images
 @app.route('/upload',methods=['POST'])
 def upload():
     global user
@@ -151,11 +141,30 @@ def upload():
         db.session.commit()
     return "<h2>Got it!</h2>"
 
-@app.route('/download/<string:uid>')
-def download(uid):
-    x = Data.query.filter_by(uid=uid).first()
-    return send_file(BytesIO(x.img), download_name=x.name,as_attachment=True)
+# Bone Facture
+@app.route('/prediction')
+def prediction():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/prediction/index.html',user=x)
 
+@app.route('/result',methods=['POST'])
+def result():
+    if request.method == 'POST':
+        pic=request.files['file']
+        pic.save('image123.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=ans()
+    return x
+
+# add report
+@app.route('/add_report')
+def add_report():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/upload/index.html',user=x)
+
+
+#profile page
 @app.route('/profile')
 def profile():
     x = Record.query.filter_by(user_name=user).first()
