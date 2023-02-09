@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
 from main import ans
+from keys import config
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -13,16 +14,7 @@ app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db'}
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-config={
-        'apiKey': "AIzaSyA0NrL3k15_rk4hQV2Mj1Ejf49GkECuaoQ",
-        'authDomain': "hideout-de60d.firebaseapp.com",
-        'databaseURL': "https://hideout-de60d-default-rtdb.firebaseio.com",
-        'projectId': "hideout-de60d",
-        'storageBucket': "hideout-de60d.appspot.com",
-        'messagingSenderId': "822673797712",
-        'appId': "1:822673797712:web:16624f9015f991d74e1755",
-        'measurementId': "G-NER9QNPQK4"
-}
+
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
 
@@ -141,21 +133,62 @@ def upload():
         db.session.commit()
     return "<h2>Got it!</h2>"
 
-# Bone Facture
+# Prediction
 @app.route('/prediction')
 def prediction():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/prediction/index.html',user=x)
 
-@app.route('/result',methods=['POST'])
-def result():
-    if request.method == 'POST':
+@app.route('/bone_fracture',methods=['POST'])
+def result1():
+    if request.method == 'POST' :
         pic=request.files['file']
         pic.save('image123.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
     x=ans()
     return x
+
+@app.route('/heart_disease',methods=['POST'])
+def result2():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('image123.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=ans()
+    return x
+
+@app.route('/diabetes',methods=['POST'])
+def result3():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('image123.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=ans()
+    return x
+
+@app.route('/lung_disease',methods=['POST'])
+def result4():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('image123.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=ans()
+    return x
+
+#mental health
+@app.route('/mental_health')
+def mental_health():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/mental/index.html',user=x)
+
+@app.route('/insurance')
+def insurance():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/insurance/index.html',user=x)
 
 # add report
 @app.route('/add_report')
