@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import ans
+from main import bone_fracture,lung_disease
 from keys import config
 
 app = Flask(__name__)
@@ -146,7 +146,7 @@ def result1():
         pic.save('image123.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
-    x=ans()
+    x=bone_fracture()
     return x
 
 @app.route('/heart_disease',methods=['POST'])
@@ -156,7 +156,7 @@ def result2():
         pic.save('image123.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
-    x=ans()
+    x=bone_fracture()
     return x
 
 @app.route('/diabetes',methods=['POST'])
@@ -166,17 +166,17 @@ def result3():
         pic.save('image123.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
-    x=ans()
+    x=bone_fracture()
     return x
 
 @app.route('/lung_disease',methods=['POST'])
 def result4():
     if request.method == 'POST' :
         pic=request.files['file']
-        pic.save('image123.jpg')
+        pic.save('lung_disease.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
-    x=ans()
+    x=lung_disease()
     return x
 
 #mental health
