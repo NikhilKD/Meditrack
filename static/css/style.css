@@ -299,4 +299,13 @@ body {
   height: 500px;
   width: 90%;
 }
-
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 3%;
+  left: 10%;
+}
+.question{
+  width: 70%;
+}
