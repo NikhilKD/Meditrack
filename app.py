@@ -4,9 +4,8 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre
 from keys import config
-from jsonify import convert
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -54,6 +53,17 @@ user="Nikhil"
 def home():
     return render_template('/home/index.html')
 
+@app.route('/insurance_predict',methods=['POST'])
+def insurance_predict():
+    if request.method == 'POST' :
+        age=request.form.get("age"),
+        gender=request.form.get("gender"),
+        bmi=request.form.get("bmi"),
+        child=request.form.get("child"),
+        smoke=request.form.get("smoke"),
+        region=request.form.get("region"),
+        x=insurance_pre(int(age[0]),int(gender[0]),float(bmi[0]),int(child[0]),int(smoke[0]),int(region[0]))
+    return x
 
 # Dashbord with records of images
 @app.route("/dashboard")
@@ -195,6 +205,7 @@ def mental_health():
 def insurance():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/insurance/index.html',user=x)
+
 
 # add report
 @app.route('/add_report')

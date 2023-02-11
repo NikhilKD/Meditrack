@@ -1,21 +1,36 @@
 {% extends 'base.html' %}
 {% block body %}
     <div class="container" >
-        <h2>Depression Detection</h2>
-        <form action="/depression" enctype="multipart/form-data" method="POST">
-            <div class="question">
-                <label for="exampleFormControlTextarea1" class="form-label">Question 1</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
+        <h2>Insurance Prediction</h2>
+        <form action="/insurance_predict" method="POST">
+            <div class="form-group" >
+                <input type="text" placeholder="Age" name="age">
+                <div class="input-group">
+                    <input type="radio" name="gender" value="0"/>
+                    <label >Male</label>
+                    <input type="radio" name="gender" value="1"/>
+                    <label >Female</label>
+                </div>
+                <input type="text" placeholder="BMI" name="bmi">
+                <input type="text" placeholder="children" name="child">
+                <div class="input-group">
+                    <input type="radio" name="smoke" value="0"/>
+                    <label >Yes</label>
+                    <input  type="radio" name="smoke" value="1"/>
+                    <label >No</label>
+                </div>
+                <div class="input-group">
+                    <input type="radio" name="region" value="0"/>
+                    <label >southeast</label>
+                    <input type="radio" name="region" value="1"/>
+                    <label >southwest</label>
+                    <input  type="radio" name="region" value="2"/>
+                    <label >northeast</label>
+                    <input  type="radio" name="region" value="3"/>
+                    <label >northwest</label>
+                </div>
             </div>
-            <div class="question">
-                <label for="exampleFormControlTextarea1" class="form-label">Question 2</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
-            </div>
-            <div class="question">
-                <label for="exampleFormControlTextarea1" class="form-label">Question 3</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
-            </div>
-            <button type="submit" value="Upload File" class="btn btn-outline-success" style="margin-top:3%">Upload</button>
+                <button type="submit" class="btn btn-outline-success">Predict</button>
         </form>
     </div>
 {% endblock body %}

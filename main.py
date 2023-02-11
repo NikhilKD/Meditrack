@@ -96,22 +96,22 @@ def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
 # print(res)
 
 #Insurance----------
-loaded_model=pickle.load(open('modelregress.pkl','rb'))
+def insurance_pre(a,g,b,c,s,r):
+    loaded_model=pickle.load(open('modelregress.pkl','rb'))
+    input_data = (a,g,b,c,s,r)
+    # age=int
+    # gender=0 for male 1 for female  
+    # bmi=float
+    # children=int
+    # smoker=0 for yes 1 for no
+    # 'region':{'southeast':0,'southwest':1,'northeast':2,'northwest':3}
+    # changing input_data to a numpy array
+    input_data_as_numpy_array = np.asarray(input_data)
 
-input_data = (31,1,25.74,0,1,0)
-# age=int
-# gender=0 for male 1 for female  
-# bmi=float
-# children=int
-# smoker=0 for yes 1 for no
-# 'region':{'southeast':0,'southwest':1,'northeast':2,'northwest':3}
-# changing input_data to a numpy array
-input_data_as_numpy_array = np.asarray(input_data)
+    # reshape the array
+    input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
 
-# reshape the array
-input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
-
-res=loaded_model.predict(input_data_reshaped)
-print(res)
-
-print('The insurance cost is USD ', res[0])
+    res=loaded_model.predict(input_data_reshaped)
+    inr = res[0] * 82.52
+    print(res[0])
+    return f'The insurance cost is Rs {str(round(inr,2))} approx'
