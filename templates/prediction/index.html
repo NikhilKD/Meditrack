@@ -20,10 +20,17 @@
     </div>
     <div class="container">
         <h2>Diabetes Detection</h2>
-        <form action="/diabetes" enctype="multipart/form-data" method="POST">
+        <form action="/diabetes" method="POST">
             <div class="form-group" >
-                <input type="file" class="form-control-file" name="file">
-                <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
+                <input type="text" placeholder="Pregnancies" name="p">
+                <input type="text" placeholder="Glucose" name="g">
+                <input type="text" placeholder="Blood Presure" name="bp">
+                <input type="text" placeholder="Skin Thickness" name="st">
+                <input type="text" placeholder="Insulin" name="insulin">
+                <input type="text" placeholder="BMI" name="bmi">
+                <input type="text" placeholder="Diabetes Pedigree Function" name="dpf">
+                <input type="text" placeholder="Age" name="age">
+                <button type="submit" class="btn btn-outline-success">Predict</button>
             </div>
         </form>
     </div>
@@ -36,4 +43,5 @@
             </div>
         </form>
     </div>
+    
 {% endblock body %}
