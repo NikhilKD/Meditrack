@@ -74,14 +74,14 @@ import pickle
 #Diabetes:----------------------------------------------------------------
 def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
     loaded_model=pickle.load(open('diabetes_model.pkl','rb'))
-    # p=1
-    # g=89
-    # bp=66
-    # st=23
-    # insulin=94
-    # bmi=28.1
-    # dpf=0.167
-    # age=21
+    print(type(p))
+    print(type(g))
+    print(type(bp))
+    print(type(st))
+    print(type(insulin))
+    print(type(bmi))
+    print(type(dpf))
+    print(type(age))
     input_data = (p,g,bp,st,insulin,bmi,dpf,age)
     input_data_as_numpy_array = np.asarray(input_data)
     input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)

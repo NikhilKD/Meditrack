@@ -6,6 +6,7 @@ import uuid
 from io import BytesIO
 from main import bone_fracture,lung_disease,diabetes_predict
 from keys import config
+from jsonify import convert
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -163,15 +164,15 @@ def result2():
 @app.route('/diabetes',methods=['POST'])
 def result3():
     if request.method == 'POST' :
-        p=list(request.form.get("p")),
-        g=list(request.form.get("g")),
-        bp=list(request.form.get("bp")),
-        st=list(request.form.get("st")),
-        insulin=list(request.form.get("insulin")),
-        bmi=list(request.form.get("bmi")),
-        dpf=list(request.form.get("dpf")),
-        age=list(request.form.get("age")),
-        x=diabetes_predict(int(p[0][0]),int(g[0][0]),int(bp[0][0]),int(st[0][0]),int(insulin[0][0]),float(bmi[0][0]),float(dpf[0][0]),int(age[0][0]))
+        p=request.form.get("p"),
+        g=request.form.get("g"),
+        bp=request.form.get("bp"),
+        st=request.form.get("st"),
+        insulin=request.form.get("insulin"),
+        bmi=request.form.get("bmi"),
+        dpf=request.form.get("dpf"),
+        age=request.form.get("age"),
+        x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
     return x
 
 @app.route('/lung_disease',methods=['POST'])
