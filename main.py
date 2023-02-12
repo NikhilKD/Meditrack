@@ -7,9 +7,6 @@ import pickle
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn import svm
-from sklearn.metrics import accuracy_score
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
@@ -47,41 +44,10 @@ scaler = StandardScaler()
 scaler.fit(X)
 
 import pickle
-# pickle.dump(classifier,open('diabetes_model.pkl','wb'))
-# scaler = StandardScaler()
-# scaler.fit(X)
-# loaded_m=pickle.load(open('diabetes_model.pkl','rb'))
-# input_data = (1,100,72,19,173,25.8,0.587,18)
-
-# # changing the input_data to numpy array
-# input_data_as_numpy_array = np.asarray(input_data)
-
-# # reshape the array as we are predicting for one instance
-# input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
-
-# # # standardize the input data
-# std_data = scaler.transform(input_data_reshaped)
-# # print(std_data)
-
-# prediction = loaded_m.predict(input_data_reshaped)
-# # print(prediction)
-
-# if (prediction[0] == 0):
-#     print('The person is not diabetic')
-# else:
-#     print('The person is diabetic')
 
 #Diabetes:----------------------------------------------------------------
 def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
     loaded_model=pickle.load(open('diabetes_model.pkl','rb'))
-    # print(type(p))
-    # print(type(g))
-    # print(type(bp))
-    # print(type(st))
-    # print(type(insulin))
-    # print(type(bmi))
-    # print(type(dpf))
-    # print(type(age))
     input_data = (p,g,bp,st,insulin,bmi,dpf,age)
     input_data_as_numpy_array = np.asarray(input_data)
     input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
@@ -115,3 +81,4 @@ def insurance_pre(a,g,b,c,s,r):
     inr = res[0] * 82.52
     print(res[0])
     return f'The insurance cost is Rs {str(round(inr,2))} approx'
+    
