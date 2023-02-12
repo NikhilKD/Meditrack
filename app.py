@@ -11,7 +11,6 @@ app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
 app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db'}
 
 db=SQLAlchemy(app)
-db.init_app(app)
 app.config['UPLOAD_FOLDER'] = ''
 
 config={
