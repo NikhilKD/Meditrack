@@ -4,7 +4,8 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import ans
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre
+from keys import config
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -13,16 +14,7 @@ app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db'}
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-config={
-        'apiKey': "AIzaSyA0NrL3k15_rk4hQV2Mj1Ejf49GkECuaoQ",
-        'authDomain': "hideout-de60d.firebaseapp.com",
-        'databaseURL': "https://hideout-de60d-default-rtdb.firebaseio.com",
-        'projectId': "hideout-de60d",
-        'storageBucket': "hideout-de60d.appspot.com",
-        'messagingSenderId': "822673797712",
-        'appId': "1:822673797712:web:16624f9015f991d74e1755",
-        'measurementId': "G-NER9QNPQK4"
-}
+
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
 
@@ -55,33 +47,24 @@ with app.app_context():
 
 user="Nikhil"
 
-
+# Home Page
 @app.route("/")
 def home():
     return render_template('/home/index.html')
 
-@app.route("/register",methods =["GET", "POST"])
-def register():
-    if request.method =='POST':
-        global user
-        record=Record(
-            user_name=user,
-            name=request.form.get("fname"),
-            address=request.form.get("faddress"),
-            city=request.form.get("fcity"),
-            state=request.form.get("fstate"),
-            pincode=request.form.get("fpincode"),
-            gender=request.form.get("fgender"),
-            date=request.form.get("fdate"),
-            blood_group=request.form.get("fblood"),
-            aadhar=request.form.get("faadhar"),
-            job=request.form.get("fjob")
-        )
-        db.session.add(record)
-        db.session.commit()
-        return redirect('/dashboard')
-    return render_template('/register/index.html')
+@app.route('/insurance_predict',methods=['POST'])
+def insurance_predict():
+    if request.method == 'POST' :
+        age=request.form.get("age"),
+        gender=request.form.get("gender"),
+        bmi=request.form.get("bmi"),
+        child=request.form.get("child"),
+        smoke=request.form.get("smoke"),
+        region=request.form.get("region"),
+        x=insurance_pre(int(age[0]),int(gender[0]),float(bmi[0]),int(child[0]),int(smoke[0]),int(region[0]))
+    return x
 
+# Dashbord with records of images
 @app.route("/dashboard")
 def dashboard():
     global user
@@ -89,7 +72,12 @@ def dashboard():
     img=Data.query.filter_by(user_name=user).all()
     return render_template('/dashboard/index.html',user=x,img=img)
 
+@app.route('/download/<string:uid>')
+def download(uid):
+    x = Data.query.filter_by(uid=uid).first()
+    return send_file(BytesIO(x.img), download_name=x.name,as_attachment=True)
 
+# Login Page
 @app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
@@ -114,26 +102,32 @@ def signIn():
         return redirect('/dashboard')
     return render_template('/login/index.html')
 
-@app.route('/add_report')
-def add_report():
-    x = Record.query.filter_by(user_name=user).first()
-    return render_template('/upload/index.html',user=x)
 
-@app.route('/result',methods=['POST'])
-def result():
-    if request.method == 'POST':
-        pic=request.files['file']
-        pic.save('image123.jpg')
-        if not pic:
-            return "<h2> No Pic Uploaded</h2>"
-    x=ans()
-    return x
+# register page
+@app.route("/register",methods =["GET", "POST"])
+def register():
+    if request.method =='POST':
+        global user
+        record=Record(
+            user_name=user,
+            name=request.form.get("fname"),
+            address=request.form.get("faddress"),
+            city=request.form.get("fcity"),
+            state=request.form.get("fstate"),
+            pincode=request.form.get("fpincode"),
+            gender=request.form.get("fgender"),
+            date=request.form.get("fdate"),
+            blood_group=request.form.get("fblood"),
+            aadhar=request.form.get("faadhar"),
+            job=request.form.get("fjob")
+        )
+        db.session.add(record)
+        db.session.commit()
+        return redirect('/dashboard')
+    return render_template('/register/index.html')
 
-@app.route('/prediction')
-def prediction():
-    x = Record.query.filter_by(user_name=user).first()
-    return render_template('/prediction/index.html',user=x)
 
+# upload images
 @app.route('/upload',methods=['POST'])
 def upload():
     global user
@@ -150,11 +144,76 @@ def upload():
         db.session.commit()
     return "<h2>Got it!</h2>"
 
-@app.route('/download/<string:uid>')
-def download(uid):
-    x = Data.query.filter_by(uid=uid).first()
-    return send_file(BytesIO(x.img), download_name=x.name,as_attachment=True)
+# Prediction
+@app.route('/prediction')
+def prediction():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/prediction/index.html',user=x)
 
+@app.route('/bone_fracture',methods=['POST'])
+def result1():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('image123.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=bone_fracture()
+    return x
+
+@app.route('/heart_disease',methods=['POST'])
+def result2():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('image123.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=bone_fracture()
+    return x
+
+@app.route('/diabetes',methods=['POST'])
+def result3():
+    if request.method == 'POST' :
+        p=request.form.get("p"),
+        g=request.form.get("g"),
+        bp=request.form.get("bp"),
+        st=request.form.get("st"),
+        insulin=request.form.get("insulin"),
+        bmi=request.form.get("bmi"),
+        dpf=request.form.get("dpf"),
+        age=request.form.get("age"),
+        x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
+    return x
+
+@app.route('/lung_disease',methods=['POST'])
+def result4():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('lung_disease.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=lung_disease()
+    return x
+
+#mental health
+@app.route('/mental_health')
+def mental_health():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/mental/index.html',user=x)
+
+@app.route('/insurance')
+def insurance():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/insurance/index.html',user=x)
+
+
+# add report
+@app.route('/add_report')
+def add_report():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/upload/index.html',user=x)
+
+
+#profile page
 @app.route('/profile')
 def profile():
     x = Record.query.filter_by(user_name=user).first()
