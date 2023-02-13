@@ -14,7 +14,6 @@ app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db'}
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
 
