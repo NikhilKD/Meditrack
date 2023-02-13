@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>complete responsive hospital website design </title>
+    <title>Meditrack</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home/style.css') }}">
 
 </head>
 <body>
@@ -42,13 +42,13 @@
 <section class="home" id="home">
 
     <div class="image">
-        <img src="image/home-img.svg" alt="">
+        <img src="{{ url_for('static', filename='css/home/assets/image/home-img.svg') }}" alt="">
     </div>
 
     <div class="content">
         <h3>stay safe, stay healthy</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem sed autem vero? Magnam, est laboriosam!</p>
-        <a href="#" class="btn"> contact us <span class="fas fa-chevron-right"></span> </a>
+        <a href="/signUp" class="btn"> Register <span class="fas fa-chevron-right"></span> </a>
     </div>
 
 </section>
@@ -444,27 +444,20 @@
 
 </section>
 
-<!-- footer section ends -->
+<script>
+    let menu = document.querySelector('#menu-btn');
+let navbar = document.querySelector('.navbar');
 
+menu.onclick = () =>{
+    menu.classList.toggle('fa-times');
+    navbar.classList.toggle('active');
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- custom js file link  -->
-<script src="js/script.js"></script>
+window.onscroll = () =>{
+    menu.classList.remove('fa-times');
+    navbar.classList.remove('active');
+}
+</script>
 
 </body>
 </html>

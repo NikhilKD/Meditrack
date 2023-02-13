@@ -81,4 +81,23 @@ def insurance_pre(a,g,b,c,s,r):
     inr = res[0] * 82.52
     print(res[0])
     return f'The insurance cost is Rs {str(round(inr,2))} approx'
-    
+
+def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal):
+    # #age,sex(0=male or 1=female),cp(1=typical angina : 2=atypical angina : 3=non-anginal pain : 4=asymptomatic),trestbps(resting blood pressure mm Hg),chol(cholesterol measurement mg/dl),fbs(fasting blood sugar(0=false,1=true)),restecg(Resting electrocardiographic measurement (0 = normal, 1 = having ST-T, 2 =hypertrophy)),thalach(The person's maximum heart rate achieved),exang(Exercise induced angina (1 = yes; 0 = no))
+# #oldpeak(ST depression induced by exercise relative to rest),slope(the slope of the peak exercise ST segment(1-upsloping, 2-flat, 3-downsloping)),ca(number of major vessels colored by flourosopy),thal(thalassemia(1-normal, 2-fixed defect, 3-reversable defect))
+    inputdata=(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
+
+    inputdata_asnumpyarray=np.asarray(inputdata) #changing the input for the numpy array
+
+    inputdata_reshape=inputdata_asnumpyarray.reshape(1,-1)
+
+    filename='heartdis_pred_model'
+
+
+    loadedmodel=pickle.load(open(filename,'rb'))
+
+    cred=loadedmodel.predict(inputdata_reshape)
+    if(cred[0]==0):
+        return 'The Person have Healthy heart '
+    else:
+        return 'The Person have Heart Disease'
