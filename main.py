@@ -53,9 +53,9 @@ def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
     print(y_pred)
     print(y_pre)
     if y_pred==1 and y_pre==1:
-        print("Diabetic")
+        return "Diabetic"
     else:
-        print("Non Diabetic")
+        return "Non Diabetic"
 
 #Insurance----------
 def insurance_pre(a,g,b,c,s,r):
@@ -75,6 +75,7 @@ def insurance_pre(a,g,b,c,s,r):
 
     res=loaded_model.predict(input_data_reshaped)
     inr = res[0] * 82.52
+    inr=inr/10
     print(res[0])
     return f'The insurance cost is Rs {str(round(inr,2))} approx'
 
