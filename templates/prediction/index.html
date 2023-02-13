@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container" >
+    <!-- <div class="container" >
         <h2>Bone Fracture Detection</h2>
         <form action="/bone_fracture" enctype="multipart/form-data" method="POST">
             <div class="form-group" >
@@ -8,14 +8,85 @@
                 <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
             </div>
         </form>
-    </div>
+    </div> -->
     <div class="container">
         <h2>Heart Disease Detection</h2>
-        <form action="/heart_disease" enctype="multipart/form-data" method="POST">
+        <form action="/heart_disease" method="POST">
             <div class="form-group" >
-                <input type="file" class="form-control-file" name="file">
-                <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
+                <input type="text" placeholder="Age" name="age">
+                <br>
+                <div class="input-group">
+                    <input type="radio" name="sex" value="0"/>
+                    <label >Male</label>
+                    <input type="radio" name="sex" value="1"/>
+                    <label >Female</label>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input type="radio" name="cp" value="1"/>
+                    <label >typical angina</label>
+                    <input type="radio" name="cp" value="2"/>
+                    <label >atypical angina</label>
+                    <input type="radio" name="cp" value="3"/>
+                    <label >non-anginal pain </label>
+                    <input type="radio" name="cp" value="4"/>
+                    <label >asymptomatic</label>
+                </div>
+                <br>
+                <input type="text" placeholder="resting blood pressure mm Hg" name="trestbps">
+                <br>
+                <input type="text" placeholder="cholesterol measurement mg/dl" name="chol">
+                <br>
+                <span>fasting blood sugar</span>
+                <div class="input-group">
+                    <input type="radio" name="fbs" value="0"/>
+                    <label >fasting blood sugar No</label>
+                    <input  type="radio" name="fbs" value="1"/>
+                    <label >fasting blood sugar Yes</label>
+                </div>
+                <br>
+                <span>Resting electrocardiographic measurement</span>
+                <div class="input-group">
+                    <input type="radio" name="restecg" value="0"/>
+                    <label >normal</label>
+                    <input type="radio" name="restecg" value="1"/>
+                    <label >having ST-T</label>
+                    <input  type="radio" name="restecg" value="2"/>
+                    <label >hypertrophy</label>
+                </div>
+                <input type="text" placeholder="The person's maximum heart rate achieved" name="thalach">
+                <br>
+                <span>Exercise induced angina</span>
+                <div class="input-group">
+                    <input type="radio" name="exang" value="0"/>
+                    <label >No</label>
+                    <input type="radio" name="exang" value="1"/>
+                    <label >Yes</label>
+                </div>
+                <input type="text" placeholder="The person's maximum heart rate achieved" name="old">
+                <br>
+                <span>slope (the slope of the peak exercise ST segment)</span>
+                <div class="input-group">
+                    <input type="radio" name="slope" value="0"/>
+                    <label >upsloping</label>
+                    <input type="radio" name="slope" value="1"/>
+                    <label >flat</label>
+                    <input type="radio" name="slope" value="3"/>
+                    <label >downsloping</label>
+                </div>
+                <input type="text" placeholder="number of major vessels colored by flourosopy" name="ca">
+                <br>
+                <span>thalassemia</span>
+                <div class="input-group">
+                    <input type="radio" name="thal" value="1"/>
+                    <label >normal</label>
+                    <input type="radio" name="thal" value="2"/>
+                    <label >fixed defect</label>
+                    <input type="radio" name="thal" value="3"/>
+                    <label >reversable defect</label>
+                </div>
             </div>
+                <button type="submit" class="btn btn-outline-success">Predict</button>
         </form>
     </div>
     <div class="container">

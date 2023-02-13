@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
 from keys import config
 
 app = Flask(__name__)
@@ -162,11 +162,21 @@ def result1():
 @app.route('/heart_disease',methods=['POST'])
 def result2():
     if request.method == 'POST' :
-        pic=request.files['file']
-        pic.save('image123.jpg')
-        if not pic:
-            return "<h2> No Pic Uploaded</h2>"
-    x=bone_fracture()
+        age=request.form.get("age"),
+        sex=request.form.get("sex"),
+        cp=request.form.get("cp"),
+        trestbps=request.form.get("trestbps"),
+        chol=request.form.get("chol"),
+        fbs=request.form.get("fbs"),
+        restecg=request.form.get("restecg"),
+        thalach=request.form.get("thalach"),
+        exang=request.form.get("exang"),
+        old=request.form.get("old"),
+        slope=request.form.get("slope"),
+        ca=request.form.get("ca"),
+        thal=request.form.get("thal"),
+        print(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
+    x=heart_prediction(int(age[0]),int(sex[0]),int(cp[0]),int(trestbps[0]),int(chol[0]),int(fbs[0]),int(restecg[0]),int(thalach[0]),int(exang[0]),float(old[0]),int(slope[0]),int(ca[0]),int(thal[0]))
     return x
 
 @app.route('/diabetes',methods=['POST'])
