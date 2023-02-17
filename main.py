@@ -6,9 +6,12 @@ from keras.utils import load_img, img_to_array
 import pickle
 import numpy as np
 import pandas as pd
+<<<<<<< HEAD
 from sklearn.preprocessing import StandardScaler
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences 
+=======
+>>>>>>> 5693581bb74dd852ab5ef2482aa11ffacd5797cb
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
@@ -38,30 +41,27 @@ def lung_disease():
         return "The person is normal"
     return "ille"
 # ..................................................
-diabetes_dataset = pd.read_csv('diabetes.csv')
-diabetes_dataset.groupby('Outcome').mean()
-X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
-Y = diabetes_dataset['Outcome']
-scaler = StandardScaler()
-scaler.fit(X)
+# diabetes_dataset = pd.read_csv('diabetes.csv')
+# diabetes_dataset.groupby('Outcome').mean()
+# X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
+# Y = diabetes_dataset['Outcome']
+# scaler = StandardScaler()
+# scaler.fit(X)
 
 import pickle
 
 #Diabetes:----------------------------------------------------------------
 def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
-    loaded_model=pickle.load(open('diabetes_model.pkl','rb'))
-    input_data = (p,g,bp,st,insulin,bmi,dpf,age)
-    input_data_as_numpy_array = np.asarray(input_data)
-    input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
-    # standardize the input data
-    std_data = scaler.transform(input_data_reshaped)
-    # # print(std_data)
-    res=loaded_model.predict(std_data)
-    if (res == 0):
-        return 'The person is not diabetic'
+    load_m1=pickle.load(open("modelnaivebayes.pkl","rb"))
+    load_m2=pickle.load(open("modelrandomforest.pkl","rb"))
+    y_pred = load_m1.predict([[p,g,bp,st,insulin,bmi,dpf,age]])
+    y_pre= load_m2.predict([[p,g,bp,st,insulin,bmi,dpf,age]])
+    print(y_pred)
+    print(y_pre)
+    if y_pred==1 and y_pre==1:
+        return "Diabetic"
     else:
-        return 'The person is diabetic'
-# print(res)
+        return "Non Diabetic"
 
 #Insurance----------
 def insurance_pre(a,g,b,c,s,r):
@@ -81,6 +81,7 @@ def insurance_pre(a,g,b,c,s,r):
 
     res=loaded_model.predict(input_data_reshaped)
     inr = res[0] * 82.52
+    inr=inr/10
     print(res[0])
     return f'The insurance cost is Rs {str(round(inr,2))} approx'
 
