@@ -7,6 +7,8 @@ import pickle
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+from keras.preprocessing.text import Tokenizer
+from keras_preprocessing.sequence import pad_sequences 
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
@@ -101,3 +103,27 @@ def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slop
         return 'The Person have Healthy heart '
     else:
         return 'The Person have Heart Disease'
+
+
+def predict_sentiment1(text):
+    load=load_model('sentiment analysis.h5', compile=False)
+    max_vocab = 20000000
+    tokenizer = Tokenizer(num_words=max_vocab)
+    text_seq = tokenizer.texts_to_sequences(text)
+    text_pad = pad_sequences(text_seq, maxlen=942)
+    predicted_sentiment = load.predict(text_pad).round()
+    if predicted_sentiment == 1.0:
+        return 'depressed'
+    else:
+        return 'normal'
+
+def mental_health(text):
+    count=0
+    for i in text:
+        print(i)
+        if predict_sentiment1(i)=='depressed':
+            count+=1
+    if count>=2:
+        return 'The person is depressed'
+    else:
+        return 'The person is normal'
