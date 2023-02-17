@@ -309,3 +309,67 @@ body {
 .question{
   width: 70%;
 }
+
+
+      .container {
+          display: flex;
+          flex-direction: column;
+          align-items: left;
+          margin-top: 50px;
+      }
+
+      form {
+          width: 50%;
+          background-color: #f2f2f2;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          text-align: center;
+      }
+
+      h2 {
+          margin-bottom: 30px;
+      }
+
+      input[type="text"], input[type="number"], input[type="email"], input[type="password"] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+      }
+
+      .form-group {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 20px;
+      }
+
+      .input-group {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+      }
+
+      label {
+          margin-right: 10px;
+      }
+
+      input[type="submit"], .btn {
+          width: 30%;
+          padding: 12px 20px;
+          border-radius: 5px;
+          border: none;
+          background-color: green;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+      }
+
+      input[type="submit"]:hover, .btn:hover {
+          background-color: #3e8e41;
+      }
+
