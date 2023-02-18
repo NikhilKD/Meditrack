@@ -80,13 +80,13 @@ def download(uid):
 @app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
-       global user
-       user=request.form.get("femail")
-       auth.create_user_with_email_and_password(
-       email=user,
-       password=request.form.get("fpassword"),
-       )
-       return redirect('/register')
+        global user
+        user=request.form.get("femail")
+        auth.create_user_with_email_and_password(
+        email=user,
+        password=request.form.get("fpassword"),
+        )
+        return redirect('/register')
     return render_template('/login/index.html')
 
 @app.route("/signIn",methods =["GET","POST"])

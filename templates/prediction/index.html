@@ -1,234 +1,255 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 
-<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+<p style="width:80vw;text-align: center;">
+  <button class="btn btn-primary" data-toggle="collapse" data-target="#bone_fracture">Bone Fracture</button>
+  <button class="btn btn-primary" data-toggle="collapse" data-target="#lung_disease">Lung Disease</button>
+  <button class="btn btn-primary" data-toggle="collapse" data-target="#heart_disease" >Heart Disease</button>
+  <!-- <button class="btn btn-primary" data-toggle="collapse" data-target="#diabetes_prediction"> Diabetes Detection</button> -->
+</p>
+<div class="container1" style="overflow-y: scroll; height: 700px">
+<div class="col">
+  <div class="row">
+    <div class="collapse" id="bone_fracture">
+      <div class="card card-body">
+          <div class="container">
+            <h2>Bone Fracture Detection</h2>
+            <form action="/bone_fracture" enctype="multipart/form-data" method="POST">
+              <div class="form-group">
+                <input type="file" class="form-control-file" name="file" />
+                <button
+                  type="submit"
+                  value="Upload File"
+                  class="btn btn-outline-success"
+                >
+                  Upload
+                </button>
+              </div>
+            </form>
+          </div>
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+  <div class="row">
+    <div class="collapse" id="lung_disease">
+      <div class="card card-body">
+        <div class="container">
+          <h2>Lung Disease Detection</h2>
+          <form action="/lung_disease" enctype="multipart/form-data" method="POST">
+            <div class="form-group">
+              <input type="file" class="form-control-file" name="file" />
+              <button
+                type="submit"
+                value="Upload File"
+                class="btn btn-outline-success"
+              >
+                Upload
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h5>
+  <div class="row">
+    <div class="collapse" id="heart_disease">
+      <div class="card card-body">
+        <div class="container">
+          <h2>Heart Disease Detection</h2>
+          <form action="/heart_disease" method="POST">
+            <div class="form-group">
+              <input type="text" placeholder="Age" name="age" />
+              <br />
+              <div class="input-group">
+                <input type="radio" name="sex" value="0" />
+                <label>Male</label>
+                <input type="radio" name="sex" value="1" />
+                <label>Female</label>
+              </div>
+              <br />
+              <div class="input-group">
+                <input type="radio" name="cp" value="1" />
+                <label>typical angina</label>
+                <input type="radio" name="cp" value="2" />
+                <label>atypical angina</label>
+                <input type="radio" name="cp" value="3" />
+                <label>non-anginal pain </label>
+                <input type="radio" name="cp" value="4" />
+                <label>asymptomatic</label>
+              </div>
+              <br />
+              <input
+                type="text"
+                placeholder="resting blood pressure mm Hg"
+                name="trestbps"
+              />
+              <br />
+              <input
+                type="text"
+                placeholder="cholesterol measurement mg/dl"
+                name="chol"
+              />
+              <br />
+              <span>fasting blood sugar</span>
+              <div class="input-group">
+                <input type="radio" name="fbs" value="0" />
+                <label>fasting blood sugar No</label>
+                <input type="radio" name="fbs" value="1" />
+                <label>fasting blood sugar Yes</label>
+              </div>
+              <br />
+              <span>Resting electrocardiographic measurement</span>
+              <div class="input-group">
+                <input type="radio" name="restecg" value="0" />
+                <label>normal</label>
+                <input type="radio" name="restecg" value="1" />
+                <label>having ST-T</label>
+                <input type="radio" name="restecg" value="2" />
+                <label>hypertrophy</label>
+              </div>
+              <input
+                type="text"
+                placeholder="The person's maximum heart rate achieved"
+                name="thalach"
+              />
+              <br />
+              <span>Exercise induced angina</span>
+              <div class="input-group">
+                <input type="radio" name="exang" value="0" />
+                <label>No</label>
+                <input type="radio" name="exang" value="1" />
+                <label>Yes</label>
+              </div>
+              <input
+                type="text"
+                placeholder="The person's maximum heart rate achieved"
+                name="old"
+              />
+              <br />
+              <span>slope (the slope of the peak exercise ST segment)</span>
+              <div class="input-group">
+                <input type="radio" name="slope" value="0" />
+                <label>upsloping</label>
+                <input type="radio" name="slope" value="1" />
+                <label>flat</label>
+                <input type="radio" name="slope" value="3" />
+                <label>downsloping</label>
+              </div>
+              <input
+                type="text"
+                placeholder="number of major vessels colored by flourosopy"
+                name="ca"
+              />
+              <br />
+              <span>thalassemia</span>
+              <div class="input-group">
+                <input type="radio" name="thal" value="1" />
+                <label>normal</label>
+                <input type="radio" name="thal" value="2" />
+                <label>fixed defect</label>
+                <input type="radio" name="thal" value="3" />
+                <label>reversable defect</label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Predict</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+  </div>
+  <div class="row">
+    <div class="collapse" id="diabetes_prediction">
+      <div class="card card-body">
+        <div class="container">
+          <h2>Diabetes Detection</h2>
+          <div class="collapse" id="formCollapse">
+            <form action="/diabetes" method="POST">
+              <div class="form-group">
+                <label for="p">Pregnancies:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Pregnancies"
+                  name="p"
+                  id="p"
+                />
+              </div>
+              <div class="form-group">
+                <label for="g">Glucose:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Glucose"
+                  name="g"
+                  id="g"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bp">Blood Pressure:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Blood Pressure"
+                  name="bp"
+                  id="bp"
+                />
+              </div>
+              <div class="form-group">
+                <label for="st">Skin Thickness:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Skin Thickness"
+                  name="st"
+                  id="st"
+                />
+              </div>
+              <div class="form-group">
+                <label for="insulin">Insulin:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Insulin"
+                  name="insulin"
+                  id="insulin"
+                />
+              </div>
+              <div class="form-group">
+                <label for="bmi">BMI:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="BMI"
+                  name="bmi"
+                  id="bmi"
+                />
+              </div>
+              <div class="form-group">
+                <label for="dpf">Diabetes Pedigree Function:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Diabetes Pedigree Function"
+                  name="dpf"
+                  id="dpf"
+                />
+              </div>
+              <div class="form-group">
+                <label for="age">Age:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Age"
+                  name="age"
+                  id="age"
+                />
+              </div>
+              <button type="submit" class="btn btn-outline-success">Predict</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<div class="container1"  style="overflow-y: scroll; height: 780px;">
-    <div class="container" >
-        <h2>Bone Fracture Detection</h2>
-        <form action="/bone_fracture" enctype="multipart/form-data" method="POST">
-            <div class="form-group" >
-                <input type="file" class="form-control-file" name="file">
-                <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
-                <script>
-                    const showFormBtn = document.getElementById("show-form-btn");
-const formContainer = document.getElementById("form-container");
-
-showFormBtn.addEventListener("click", function() {
-const formHTML = <div class="container" style="overflow-y: scroll; height: 780px;"> <div class="container"> <h2>Bone Fracture Detection</h2> <form action="/bone_fracture" enctype="multipart/form-data" method="POST"> <div class="form-group"> <input type="file" class="form-control-file" name="file"> <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button> </div> </form> </div> </div> ;
-const newContainer = document.createElement("div");
-newContainer.innerHTML = formHTML;
-formContainer.appendChild(newContainer);
-});
-                </script>
-            </div>
-        </form>
-    </div>
-    <div class="container">
-        <h2>Heart Disease Detection</h2>
-        <form action="/heart_disease" method="POST">
-            <div class="form-group" >
-                <input type="text" placeholder="Age" name="age">
-                <br>
-                <div class="input-group">
-                    <input type="radio" name="sex" value="0"/>
-                    <label >Male</label>
-                    <input type="radio" name="sex" value="1"/>
-                    <label >Female</label>
-                </div>
-                <br>
-                <div class="input-group">
-                    <input type="radio" name="cp" value="1"/>
-                    <label >typical angina</label>
-                    <input type="radio" name="cp" value="2"/>
-                    <label >atypical angina</label>
-                    <input type="radio" name="cp" value="3"/>
-                    <label >non-anginal pain </label>
-                    <input type="radio" name="cp" value="4"/>
-                    <label >asymptomatic</label>
-                </div>
-                <br>
-                <input type="text" placeholder="resting blood pressure mm Hg" name="trestbps">
-                <br>
-                <input type="text" placeholder="cholesterol measurement mg/dl" name="chol">
-                <br>
-                <span>fasting blood sugar</span>
-                <div class="input-group">
-                    <input type="radio" name="fbs" value="0"/>
-                    <label >fasting blood sugar No</label>
-                    <input  type="radio" name="fbs" value="1"/>
-                    <label >fasting blood sugar Yes</label>
-                </div>
-                <br>
-                <span>Resting electrocardiographic measurement</span>
-                <div class="input-group">
-                    <input type="radio" name="restecg" value="0"/>
-                    <label >normal</label>
-                    <input type="radio" name="restecg" value="1"/>
-                    <label >having ST-T</label>
-                    <input  type="radio" name="restecg" value="2"/>
-                    <label >hypertrophy</label>
-                </div>
-                <input type="text" placeholder="The person's maximum heart rate achieved" name="thalach">
-                <br>
-                <span>Exercise induced angina</span>
-                <div class="input-group">
-                    <input type="radio" name="exang" value="0"/>
-                    <label >No</label>
-                    <input type="radio" name="exang" value="1"/>
-                    <label >Yes</label>
-                </div>
-                <input type="text" placeholder="The person's maximum heart rate achieved" name="old">
-                <br>
-                <span>slope (the slope of the peak exercise ST segment)</span>
-                <div class="input-group">
-                    <input type="radio" name="slope" value="0"/>
-                    <label >upsloping</label>
-                    <input type="radio" name="slope" value="1"/>
-                    <label >flat</label>
-                    <input type="radio" name="slope" value="3"/>
-                    <label >downsloping</label>
-                </div>
-                <input type="text" placeholder="number of major vessels colored by flourosopy" name="ca">
-                <br>
-                <span>thalassemia</span>
-                <div class="input-group">
-                    <input type="radio" name="thal" value="1"/>
-                    <label >normal</label>
-                    <input type="radio" name="thal" value="2"/>
-                    <label >fixed defect</label>
-                    <input type="radio" name="thal" value="3"/>
-                    <label >reversable defect</label>
-                </div>
-            </div>
-                <button type="submit" class="btn btn-outline-success">Predict</button>
-        </form>
-    </div>
-    <details>
-  <summary>Diabetes Detection</summary>
-  <div class="container">
-    <style>
-  .btn {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 20px;
-    padding: 10px 20px;
-  }
-
-  .collapse {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 10px;
-  }
-</style>
-    <!-- Add the following code to the <head> section of your HTML file -->
-    <!-- Required meta tags for responsive design -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#formCollapse" aria-expanded="false" aria-controls="formCollapse">
-  Show form
-</button>
-<div class="collapse" id="formCollapse">
-  <form action="/diabetes" method="POST">
-    <div class="form-group">
-      <label for="p">Pregnancies:</label>
-      <input type="text" class="form-control" placeholder="Pregnancies" name="p" id="p">
-    </div>
-    <div class="form-group">
-      <label for="g">Glucose:</label>
-      <input type="text" class="form-control" placeholder="Glucose" name="g" id="g">
-    </div>
-    <div class="form-group">
-      <label for="bp">Blood Pressure:</label>
-      <input type="text" class="form-control" placeholder="Blood Pressure" name="bp" id="bp">
-    </div>
-    <div class="form-group">
-      <label for="st">Skin Thickness:</label>
-      <input type="text" class="form-control" placeholder="Skin Thickness" name="st" id="st">
-    </div>
-    <div class="form-group">
-      <label for="insulin">Insulin:</label>
-      <input type="text" class="form-control" placeholder="Insulin" name="insulin" id="insulin">
-    </div>
-    <div class="form-group">
-      <label for="bmi">BMI:</label>
-      <input type="text" class="form-control" placeholder="BMI" name="bmi" id="bmi">
-    </div>
-    <div class="form-group">
-      <label for="dpf">Diabetes Pedigree Function:</label>
-      <input type="text" class="form-control" placeholder="Diabetes Pedigree Function" name="dpf" id="dpf">
-    </div>
-    <div class="form-group">
-      <label for="age">Age:</label>
-      <input type="text" class="form-control" placeholder="Age" name="age" id="age">
-    </div>
-    <button type="submit" class="btn btn-outline-success">Predict</button>
-  </form>
 </div>
-  </div>
-  </details>
-    <div class="container">
-        <h2>Lung Disease Detection</h2>
-        <form action="/lung_disease" enctype="multipart/form-data" method="POST">
-            <div class="form-group" >
-                <input type="file" class="form-control-file" name="file">
-                <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
-            </div>
-        </form>
-    </div>
-</div>
-    
-    
 {% endblock body %}
