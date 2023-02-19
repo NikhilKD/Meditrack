@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
 from keys import config
 
 app = Flask(__name__)

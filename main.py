@@ -5,10 +5,7 @@ from keras.applications.vgg16 import preprocess_input
 from keras.utils import load_img, img_to_array
 import pickle
 import numpy as np
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from keras.preprocessing.text import Tokenizer
-from keras_preprocessing.sequence import pad_sequences 
+
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
@@ -51,7 +48,7 @@ def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
     else:
         return "Non Diabetic"
 
-#Insurance----------
+#Insurance-------------------------------------------------------
 def insurance_pre(a,g,b,c,s,r):
     loaded_model=pickle.load(open('modelregress.pkl','rb'))
     input_data = (a,g,b,c,s,r)
@@ -73,9 +70,9 @@ def insurance_pre(a,g,b,c,s,r):
     print(res[0])
     return f'The insurance cost is Rs {str(round(inr,2))} approx'
 
+#heart disease-----------------------------------------------------------
 def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal):
-    # #age,sex(0=male or 1=female),cp(1=typical angina : 2=atypical angina : 3=non-anginal pain : 4=asymptomatic),trestbps(resting blood pressure mm Hg),chol(cholesterol measurement mg/dl),fbs(fasting blood sugar(0=false,1=true)),restecg(Resting electrocardiographic measurement (0 = normal, 1 = having ST-T, 2 =hypertrophy)),thalach(The person's maximum heart rate achieved),exang(Exercise induced angina (1 = yes; 0 = no))
-# #oldpeak(ST depression induced by exercise relative to rest),slope(the slope of the peak exercise ST segment(1-upsloping, 2-flat, 3-downsloping)),ca(number of major vessels colored by flourosopy),thal(thalassemia(1-normal, 2-fixed defect, 3-reversable defect))
+
     inputdata=(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
 
     inputdata_asnumpyarray=np.asarray(inputdata) #changing the input for the numpy array
@@ -93,26 +90,3 @@ def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slop
     else:
         return 'The Person have Heart Disease'
 
-
-def predict_sentiment1(text):
-    load=load_model('sentiment analysis.h5', compile=False)
-    max_vocab = 20000000
-    tokenizer = Tokenizer(num_words=max_vocab)
-    text_seq = tokenizer.texts_to_sequences(text)
-    text_pad = pad_sequences(text_seq, maxlen=942)
-    predicted_sentiment = load.predict(text_pad).round()
-    if predicted_sentiment == 1.0:
-        return 'depressed'
-    else:
-        return 'normal'
-
-def mental_health(text):
-    count=0
-    for i in text:
-        print(i)
-        if predict_sentiment1(i)=='depressed':
-            count+=1
-    if count>=2:
-        return 'The person is depressed'
-    else:
-        return 'The person is normal'
