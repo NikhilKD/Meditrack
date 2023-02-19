@@ -6,12 +6,9 @@ from keras.utils import load_img, img_to_array
 import pickle
 import numpy as np
 import pandas as pd
-<<<<<<< HEAD
 from sklearn.preprocessing import StandardScaler
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences 
-=======
->>>>>>> 5693581bb74dd852ab5ef2482aa11ffacd5797cb
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
@@ -40,15 +37,6 @@ def lung_disease():
     elif classes[0][0]==1.0 and classes[0][1]==0.0:
         return "The person is normal"
     return "ille"
-# ..................................................
-# diabetes_dataset = pd.read_csv('diabetes.csv')
-# diabetes_dataset.groupby('Outcome').mean()
-# X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
-# Y = diabetes_dataset['Outcome']
-# scaler = StandardScaler()
-# scaler.fit(X)
-
-import pickle
 
 #Diabetes:----------------------------------------------------------------
 def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):

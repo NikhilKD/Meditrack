@@ -14,11 +14,8 @@ app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db','prediction':'sqlite:
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-<<<<<<< HEAD
 # db.init_app(app)
 
-=======
->>>>>>> 5693581bb74dd852ab5ef2482aa11ffacd5797cb
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
 
@@ -54,7 +51,6 @@ class Prediction(db.Model):
     bone_fracture=db.Column(db.String(100),nullable=True)
     heart_prediction=db.Column(db.String(100),nullable=True)
     lung_disease=db.Column(db.String(100),nullable=True)
-
 
 
 with app.app_context():
@@ -96,13 +92,13 @@ def download(uid):
 @app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
-       global user
-       user=request.form.get("femail")
-       auth.create_user_with_email_and_password(
-       email=user,
-       password=request.form.get("fpassword"),
-       )
-       return redirect('/register')
+        global user
+        user=request.form.get("femail")
+        auth.create_user_with_email_and_password(
+        email=user,
+        password=request.form.get("fpassword"),
+        )
+        return redirect('/register')
     return render_template('/login/index.html')
 
 @app.route("/signIn",methods =["GET","POST"])
@@ -112,7 +108,7 @@ def signIn():
         user=request.form.get("femail")
         auth.sign_in_with_email_and_password(
         email=user,
-        password=request.form.get("fpassword"),
+        password=request.form.get("fpassword")
         )
         return redirect('/dashboard')
     return render_template('/login/index.html')
