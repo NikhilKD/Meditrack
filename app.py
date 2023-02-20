@@ -6,6 +6,7 @@ import uuid
 from io import BytesIO
 from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
 from keys import config
+import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -180,7 +181,12 @@ def result1():
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
     x=bone_fracture()
-    return x
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.bone_fracture=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 #mental health
 @app.route('/mental_health')
@@ -220,7 +226,12 @@ def result2():
         thal=request.form.get("thal"),
         print(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
     x=heart_prediction(int(age[0]),int(sex[0]),int(cp[0]),int(trestbps[0]),int(chol[0]),int(fbs[0]),int(restecg[0]),int(thalach[0]),int(exang[0]),float(old[0]),int(slope[0]),int(ca[0]),int(thal[0]))
-    return x
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.heart_prediction=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 @app.route('/diabetes',methods=['POST'])
 def result3():
@@ -233,8 +244,13 @@ def result3():
         bmi=request.form.get("bmi"),
         dpf=request.form.get("dpf"),
         age=request.form.get("age"),
-        x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
-    return x
+    x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.diabetes=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 @app.route('/lung_disease',methods=['POST'])
 def result4():
@@ -244,7 +260,12 @@ def result4():
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
     x=lung_disease()
-    return x
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.lung_disease=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 @app.route('/insurance')
 def insurance():
@@ -257,7 +278,7 @@ def summary():
     return render_template('/summary/index.html',user=x)
 
 @app.route('/doctors')
-def summary():
+def doctors():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/doctors/index.html',user=x)
 
