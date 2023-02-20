@@ -53,7 +53,6 @@ class Prediction(db.Model):
     lung_disease=db.Column(db.String(100),nullable=True)
 
 
-
 with app.app_context():
     db.create_all()
 
@@ -109,7 +108,7 @@ def signIn():
         user=request.form.get("femail")
         auth.sign_in_with_email_and_password(
         email=user,
-        password=request.form.get("fpassword"),
+        password=request.form.get("fpassword"), 
         )
         return redirect('/dashboard')
     return render_template('/login/index.html')
