@@ -4,15 +4,17 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
 from keys import config
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
-app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db'}
+app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db','prediction':'sqlite:///prediction.db'}
 
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
+
+# db.init_app(app)
 
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
@@ -39,6 +41,17 @@ class Data(db.Model):
     img = db.Column(db.Text, unique=True, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     uid = db.Column(db.Text, unique=True, nullable=False)
+
+
+class Prediction(db.Model):
+    __bind_key__ = 'prediction'
+    user_name=db.Column(db.String(100),nullable=False,primary_key=True)
+    diabetes=db.Column(db.String(100),nullable=True)
+    depression=db.Column(db.String(100),nullable=True)
+    bone_fracture=db.Column(db.String(100),nullable=True)
+    heart_prediction=db.Column(db.String(100),nullable=True)
+    lung_disease=db.Column(db.String(100),nullable=True)
+
 
 
 with app.app_context():
@@ -80,13 +93,13 @@ def download(uid):
 @app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
-       global user
-       user=request.form.get("femail")
-       auth.create_user_with_email_and_password(
-       email=user,
-       password=request.form.get("fpassword"),
-       )
-       return redirect('/register')
+        global user
+        user=request.form.get("femail")
+        auth.create_user_with_email_and_password(
+        email=user,
+        password=request.form.get("fpassword"),
+        )
+        return redirect('/register')
     return render_template('/login/index.html')
 
 @app.route("/signIn",methods =["GET","POST"])
@@ -120,6 +133,16 @@ def register():
             aadhar=request.form.get("faadhar"),
             job=request.form.get("fjob")
         )
+        predict=Prediction(
+            user_name=user,
+            diabetes="null",
+            depression="null",
+            bone_fracture="null",
+            heart_prediction="null",
+            lung_disease="null",
+        )
+        db.session.add(predict)
+        db.session.commit()
         db.session.add(record)
         db.session.commit()
         return redirect('/dashboard')
@@ -205,9 +228,24 @@ def result4():
 
 #mental health
 @app.route('/mental_health')
-def mental_health():
+def depression():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/mental/index.html',user=x)
+
+@app.route('/mental_predict',methods=['POST'])
+def result5():
+    list1=[]
+    if request.method == 'POST':
+        q1=request.form.get("question1")
+        q2=request.form.get("question2")
+        q3=request.form.get("question3")
+        list1.append([str(q1)])
+        list1.append([str(q2)])
+        list1.append([str(q3)])
+    print(list1)
+    x=mental_health(list1)
+    return x
+
 
 @app.route('/insurance')
 def insurance():

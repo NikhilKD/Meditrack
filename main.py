@@ -6,6 +6,9 @@ from keras.utils import load_img, img_to_array
 import pickle
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from keras.preprocessing.text import Tokenizer
+from keras_preprocessing.sequence import pad_sequences 
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
@@ -34,14 +37,7 @@ def lung_disease():
     elif classes[0][0]==1.0 and classes[0][1]==0.0:
         return "The person is normal"
     return "ille"
-# ..................................................
-# diabetes_dataset = pd.read_csv('diabetes.csv')
-# diabetes_dataset.groupby('Outcome').mean()
-# X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
-# Y = diabetes_dataset['Outcome']
-# scaler = StandardScaler()
-# scaler.fit(X)
-
+# .......................................................................
 import pickle
 
 #Diabetes:----------------------------------------------------------------
@@ -57,7 +53,7 @@ def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
     else:
         return "Non Diabetic"
 
-#Insurance----------
+#Insurance-------------------------------------------------------
 def insurance_pre(a,g,b,c,s,r):
     loaded_model=pickle.load(open('modelregress.pkl','rb'))
     input_data = (a,g,b,c,s,r)
@@ -79,6 +75,7 @@ def insurance_pre(a,g,b,c,s,r):
     print(res[0])
     return f'The insurance cost is Rs {str(round(inr,2))} approx'
 
+#heart disease-----------------------------------------------------------
 def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal):
     # #age,sex(0=male or 1=female),cp(1=typical angina : 2=atypical angina : 3=non-anginal pain : 4=asymptomatic),trestbps(resting blood pressure mm Hg),chol(cholesterol measurement mg/dl),fbs(fasting blood sugar(0=false,1=true)),restecg(Resting electrocardiographic measurement (0 = normal, 1 = having ST-T, 2 =hypertrophy)),thalach(The person's maximum heart rate achieved),exang(Exercise induced angina (1 = yes; 0 = no))
 # #oldpeak(ST depression induced by exercise relative to rest),slope(the slope of the peak exercise ST segment(1-upsloping, 2-flat, 3-downsloping)),ca(number of major vessels colored by flourosopy),thal(thalassemia(1-normal, 2-fixed defect, 3-reversable defect))
@@ -98,3 +95,4 @@ def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slop
         return 'The Person have Healthy heart '
     else:
         return 'The Person have Heart Disease'
+
