@@ -25,18 +25,15 @@ def bone_fracture():
 
 
 def lung_disease():
-    loaded_model=load_model("lungpred.h5",compile=False)
-    img=load_img('lung_disease.jpg',target_size=(224,224))
-    x=img_to_array(img)
-    x=np.expand_dims(x,axis=0)
-    img_data=preprocess_input(x)
-    classes=loaded_model.predict(img_data)
-    print(classes)
-    if classes[0][0]==0.0 and classes[0][1]==1.0:
-        return "The person has pneumonia"
-    elif classes[0][0]==1.0 and classes[0][1]==0.0:
-        return "The person is normal"
-    return "ille"
+    check='lung_disease.jpg'
+    model=load_model("Pneumonia.h5")
+    img=load_img(check, target_size=(150, 150), grayscale=True)
+    img=np.array(img)/255
+    img=img.reshape(-1,150,150,1)
+    isPneumonic=model.predict(img)[0]
+    imgClass='Pneumonic' if isPneumonic<0.5 else 'Normal'
+    return imgClass
+
 # .......................................................................
 import pickle
 
