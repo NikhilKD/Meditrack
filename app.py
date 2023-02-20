@@ -58,6 +58,7 @@ with app.app_context():
 
 user="Nikhil"
 
+
 # Home Page
 @app.route("/")
 def home():
@@ -181,6 +182,26 @@ def result1():
     x=bone_fracture()
     return x
 
+#mental health
+@app.route('/mental_health')
+def depression():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/mental/index.html',user=x)
+
+@app.route('/mental_predict',methods=['POST'])
+def result5():
+    list1=[]
+    if request.method == 'POST':
+        q1=request.form.get("question1")
+        q2=request.form.get("question2")
+        q3=request.form.get("question3")
+        list1.append([str(q1)])
+        list1.append([str(q2)])
+        list1.append([str(q3)])
+    print(list1)
+    # x=mental_health(list1)
+    # return x
+
 @app.route('/heart_disease',methods=['POST'])
 def result2():
     if request.method == 'POST' :
@@ -225,32 +246,20 @@ def result4():
     x=lung_disease()
     return x
 
-#mental health
-@app.route('/mental_health')
-def depression():
-    x = Record.query.filter_by(user_name=user).first()
-    return render_template('/mental/index.html',user=x)
-
-@app.route('/mental_predict',methods=['POST'])
-def result5():
-    list1=[]
-    if request.method == 'POST':
-        q1=request.form.get("question1")
-        q2=request.form.get("question2")
-        q3=request.form.get("question3")
-        list1.append([str(q1)])
-        list1.append([str(q2)])
-        list1.append([str(q3)])
-    print(list1)
-    x=mental_health(list1)
-    return x
-
-
 @app.route('/insurance')
 def insurance():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/insurance/index.html',user=x)
 
+@app.route('/summary')
+def summary():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/summary/index.html',user=x)
+
+@app.route('/doctors')
+def summary():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/doctors/index.html',user=x)
 
 # add report
 @app.route('/add_report')
