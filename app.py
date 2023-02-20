@@ -4,8 +4,9 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
 from keys import config
+import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -51,7 +52,6 @@ class Prediction(db.Model):
     bone_fracture=db.Column(db.String(100),nullable=True)
     heart_prediction=db.Column(db.String(100),nullable=True)
     lung_disease=db.Column(db.String(100),nullable=True)
-
 
 
 with app.app_context():
@@ -109,7 +109,7 @@ def signIn():
         user=request.form.get("femail")
         auth.sign_in_with_email_and_password(
         email=user,
-        password=request.form.get("fpassword"),
+        password=request.form.get("fpassword")
         )
         return redirect('/dashboard')
     return render_template('/login/index.html')
@@ -180,51 +180,12 @@ def result1():
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
     x=bone_fracture()
-    return x
-
-@app.route('/heart_disease',methods=['POST'])
-def result2():
-    if request.method == 'POST' :
-        age=request.form.get("age"),
-        sex=request.form.get("sex"),
-        cp=request.form.get("cp"),
-        trestbps=request.form.get("trestbps"),
-        chol=request.form.get("chol"),
-        fbs=request.form.get("fbs"),
-        restecg=request.form.get("restecg"),
-        thalach=request.form.get("thalach"),
-        exang=request.form.get("exang"),
-        old=request.form.get("old"),
-        slope=request.form.get("slope"),
-        ca=request.form.get("ca"),
-        thal=request.form.get("thal"),
-        print(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
-    x=heart_prediction(int(age[0]),int(sex[0]),int(cp[0]),int(trestbps[0]),int(chol[0]),int(fbs[0]),int(restecg[0]),int(thalach[0]),int(exang[0]),float(old[0]),int(slope[0]),int(ca[0]),int(thal[0]))
-    return x
-
-@app.route('/diabetes',methods=['POST'])
-def result3():
-    if request.method == 'POST' :
-        p=request.form.get("p"),
-        g=request.form.get("g"),
-        bp=request.form.get("bp"),
-        st=request.form.get("st"),
-        insulin=request.form.get("insulin"),
-        bmi=request.form.get("bmi"),
-        dpf=request.form.get("dpf"),
-        age=request.form.get("age"),
-        x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
-    return x
-
-@app.route('/lung_disease',methods=['POST'])
-def result4():
-    if request.method == 'POST' :
-        pic=request.files['file']
-        pic.save('lung_disease.jpg')
-        if not pic:
-            return "<h2> No Pic Uploaded</h2>"
-    x=lung_disease()
-    return x
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.bone_fracture=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 #mental health
 @app.route('/mental_health')
@@ -244,21 +205,92 @@ def result5():
         list1.append([str(q3)])
     print(list1)
     x=mental_health(list1)
-    return x
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.depression=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
+@app.route('/heart_disease',methods=['POST'])
+def result2():
+    if request.method == 'POST' :
+        age=request.form.get("age"),
+        sex=request.form.get("sex"),
+        cp=request.form.get("cp"),
+        trestbps=request.form.get("trestbps"),
+        chol=request.form.get("chol"),
+        fbs=request.form.get("fbs"),
+        restecg=request.form.get("restecg"),
+        thalach=request.form.get("thalach"),
+        exang=request.form.get("exang"),
+        old=request.form.get("old"),
+        slope=request.form.get("slope"),
+        ca=request.form.get("ca"),
+        thal=request.form.get("thal"),
+        print(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
+    x=heart_prediction(int(age[0]),int(sex[0]),int(cp[0]),int(trestbps[0]),int(chol[0]),int(fbs[0]),int(restecg[0]),int(thalach[0]),int(exang[0]),float(old[0]),int(slope[0]),int(ca[0]),int(thal[0]))
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.heart_prediction=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
+
+@app.route('/diabetes',methods=['POST'])
+def result3():
+    if request.method == 'POST' :
+        p=request.form.get("p"),
+        g=request.form.get("g"),
+        bp=request.form.get("bp"),
+        st=request.form.get("st"),
+        insulin=request.form.get("insulin"),
+        bmi=request.form.get("bmi"),
+        dpf=request.form.get("dpf"),
+        age=request.form.get("age"),
+    x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.diabetes=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
+
+@app.route('/lung_disease',methods=['POST'])
+def result4():
+    if request.method == 'POST' :
+        pic=request.files['file']
+        pic.save('lung_disease.jpg')
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>"
+    x=lung_disease()
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.lung_disease=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 @app.route('/insurance')
 def insurance():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/insurance/index.html',user=x)
 
+@app.route('/summary')
+def summary():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/summary/index.html',user=x)
+
+@app.route('/doctors')
+def doctors():
+    x = Record.query.filter_by(user_name=user).first()
+    return render_template('/doctors/index.html',user=x)
 
 # add report
 @app.route('/add_report')
 def add_report():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/upload/index.html',user=x)
-
 
 #profile page
 @app.route('/profile')
