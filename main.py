@@ -4,11 +4,14 @@ from keras.models import *
 from keras.applications.vgg16 import preprocess_input
 from keras.utils import load_img, img_to_array
 import pickle
-import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from keras.preprocessing.text import Tokenizer
+from keras_preprocessing.sequence import pad_sequences
 
 
 def bone_fracture():
-    loaded_model=load_model("best_model.h5")
+    loaded_model=load_model("pred_models/best_model.h5")
     img = load_img('image123.jpg',target_size=(224,224))
     imag = img_to_array(img)
     imaga = np.expand_dims(imag,axis=0) 
@@ -18,27 +21,23 @@ def bone_fracture():
         op="Fracture"   
     else:
         op="Normal"
-    return "THE UPLOADED X-RAY IMAGE IS: "+str(op)
+    return str(op)
 
 
 def lung_disease():
-    loaded_model=load_model("lungpred.h5",compile=False)
-    img=load_img('lung_disease.jpg',target_size=(224,224))
-    x=img_to_array(img)
-    x=np.expand_dims(x,axis=0)
-    img_data=preprocess_input(x)
-    classes=loaded_model.predict(img_data)
-    print(classes)
-    if classes[0][0]==0.0 and classes[0][1]==1.0:
-        return "The person has pneumonia"
-    elif classes[0][0]==1.0 and classes[0][1]==0.0:
-        return "The person is normal"
-    return "ille"
+    check='lung_disease.jpg'
+    model=load_model("pred_models/Pneumonia.h5")
+    img=load_img(check, target_size=(150, 150), grayscale=True)
+    img=np.array(img)/255
+    img=img.reshape(-1,150,150,1)
+    isPneumonic=model.predict(img)[0]
+    imgClass='Pneumonic' if isPneumonic<0.5 else 'Normal'
+    return imgClass
 
 #Diabetes:----------------------------------------------------------------
 def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
-    load_m1=pickle.load(open("modelnaivebayes.pkl","rb"))
-    load_m2=pickle.load(open("modelrandomforest.pkl","rb"))
+    load_m1=pickle.load(open("pred_models/modelnaivebayes.pkl","rb"))
+    load_m2=pickle.load(open("pred_models/modelrandomforest.pkl","rb"))
     y_pred = load_m1.predict([[p,g,bp,st,insulin,bmi,dpf,age]])
     y_pre= load_m2.predict([[p,g,bp,st,insulin,bmi,dpf,age]])
     print(y_pred)
@@ -50,7 +49,7 @@ def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
 
 #Insurance-------------------------------------------------------
 def insurance_pre(a,g,b,c,s,r):
-    loaded_model=pickle.load(open('modelregress.pkl','rb'))
+    loaded_model=pickle.load(open('pred_models/modelregress.pkl','rb'))
     input_data = (a,g,b,c,s,r)
     # age=int
     # gender=0 for male 1 for female  
@@ -79,14 +78,32 @@ def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slop
 
     inputdata_reshape=inputdata_asnumpyarray.reshape(1,-1)
 
-    filename='heartdis_pred_model'
-
+    filename='pred_models/heartdis_pred_model'
 
     loadedmodel=pickle.load(open(filename,'rb'))
 
     cred=loadedmodel.predict(inputdata_reshape)
     if(cred[0]==0):
-        return 'The Person have Healthy heart '
+        return 'Healthy heart'
     else:
-        return 'The Person have Heart Disease'
+        return 'Heart Disease'
 
+#Depression----------------------------------------------------------------------------------------
+def predict_sentiment1(text):
+    max_vocab = 20000000
+    tokenizer = Tokenizer(num_words=max_vocab)
+    data = pd.read_csv('csv_file/data1.csv')
+    a=data.text.values
+    tokenizer.fit_on_texts(a)
+    load=load_model('pred_models/tweetanalysis.h5')
+    text_seq = tokenizer.texts_to_sequences(text)
+    text_pad = pad_sequences(text_seq, maxlen=942)
+    predicted_sentiment = load.predict(text_pad).round()
+    if predicted_sentiment == 1.0:
+        return 'depressed'
+    else:
+        return 'normal'
+    
+# text = [["I want to die"],["Failed in test"],["i'm good"],["my life is aimless and sad"]]
+# for i in text:
+#     print(predict_sentiment1(i))

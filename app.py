@@ -288,7 +288,6 @@ def add_report():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/upload/index.html',user=x)
 
-
 #profile page
 @app.route('/profile')
 def profile():
