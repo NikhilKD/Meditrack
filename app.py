@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
 from keys import config
 
 app = Flask(__name__)
@@ -226,39 +226,16 @@ def result4():
     x=lung_disease()
     return x
 
-#mental health
-@app.route('/mental_health')
-def depression():
-    x = Record.query.filter_by(user_name=user).first()
-    return render_template('/mental/index.html',user=x)
-
-@app.route('/mental_predict',methods=['POST'])
-def result5():
-    list1=[]
-    if request.method == 'POST':
-        q1=request.form.get("question1")
-        q2=request.form.get("question2")
-        q3=request.form.get("question3")
-        list1.append([str(q1)])
-        list1.append([str(q2)])
-        list1.append([str(q3)])
-    print(list1)
-    x=mental_health(list1)
-    return x
-
-
 @app.route('/insurance')
 def insurance():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/insurance/index.html',user=x)
-
 
 # add report
 @app.route('/add_report')
 def add_report():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/upload/index.html',user=x)
-
 
 #profile page
 @app.route('/profile')

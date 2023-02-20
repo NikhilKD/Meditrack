@@ -7,8 +7,6 @@ import pickle
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from keras.preprocessing.text import Tokenizer
-from keras_preprocessing.sequence import pad_sequences 
 
 def bone_fracture():
     loaded_model=load_model("best_model.h5")
