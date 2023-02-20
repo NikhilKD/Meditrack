@@ -95,7 +95,7 @@ def predict_sentiment1(text):
     data = pd.read_csv('csv_file/data1.csv')
     a=data.text.values
     tokenizer.fit_on_texts(a)
-    load=load_model('pred_models/tweetanalysis.h5')
+    load=load_model('pred_models/tweetanalysis.h5',compile=False)
     text_seq = tokenizer.texts_to_sequences(text)
     text_pad = pad_sequences(text_seq, maxlen=942)
     predicted_sentiment = load.predict(text_pad).round()
@@ -104,6 +104,12 @@ def predict_sentiment1(text):
     else:
         return 'normal'
     
-# text = [["I want to die"],["Failed in test"],["i'm good"],["my life is aimless and sad"]]
-# for i in text:
-#     print(predict_sentiment1(i))
+def mental_health(text):
+    count=0
+    for i in text:
+        if predict_sentiment1(i)=='depressed':
+            count+=1
+    if count>=2:
+        return 'Depressed'
+    else:
+        return "Normal"

@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
 from keys import config
 import datetime
 
@@ -58,7 +58,6 @@ with app.app_context():
     db.create_all()
 
 user="Nikhil"
-
 
 # Home Page
 @app.route("/")
@@ -205,8 +204,13 @@ def result5():
         list1.append([str(q2)])
         list1.append([str(q3)])
     print(list1)
-    # x=mental_health(list1)
-    # return x
+    x=mental_health(list1)
+    y = Prediction.query.filter_by(user_name=user).first()
+    current_date = datetime.date.today()
+    y.depression=x+"/"+str(current_date)
+    db.session.add(y)
+    db.session.commit()
+    return redirect('/summary')
 
 @app.route('/heart_disease',methods=['POST'])
 def result2():
