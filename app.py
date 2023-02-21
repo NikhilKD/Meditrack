@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect,Response,send_file
+from flask import Flask, make_response,render_template,request,redirect,Response,send_file
 from flask_sqlalchemy import SQLAlchemy
 import pyrebase
 from werkzeug.utils import secure_filename
@@ -7,6 +7,7 @@ from io import BytesIO
 from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
 from keys import config
 import datetime
+import pdfkit
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
@@ -58,6 +59,8 @@ with app.app_context():
     db.create_all()
 
 user="Nikhil"
+predictions={}
+dates={}
 
 # Home Page
 @app.route("/")
@@ -135,11 +138,11 @@ def register():
         )
         predict=Prediction(
             user_name=user,
-            diabetes="null",
-            depression="null",
-            bone_fracture="null",
-            heart_prediction="null",
-            lung_disease="null",
+            diabetes="null/null",
+            depression="null/null",
+            bone_fracture="null/null",
+            heart_prediction="null/null",
+            lung_disease="null/null",
         )
         db.session.add(predict)
         db.session.commit()
@@ -278,8 +281,48 @@ def insurance():
 
 @app.route('/summary')
 def summary():
+    global predictions
+    global dates
     x = Record.query.filter_by(user_name=user).first()
-    return render_template('/summary/index.html',user=x)
+    y = Prediction.query.filter_by(user_name=user).first()
+    bone_fracture=y.bone_fracture.split('/')
+    diabetes=y.diabetes.split('/')
+    lung_disease=y.lung_disease.split('/')
+    heart_prediction=y.heart_prediction.split('/')
+    depression=y.depression.split('/')
+    predict={
+        'bone_fracture':bone_fracture[0],
+        'diabetes':diabetes[0],
+        'lung_disease':lung_disease[0],
+        'heart_prediction':heart_prediction[0],
+        'depression':depression[0],
+    }
+    date={
+        'bone_fracture':bone_fracture[1],
+        'diabetes':diabetes[1],
+        'lung_disease':lung_disease[1],
+        'heart_prediction':heart_prediction[1],
+        'depression':depression[1],
+    }
+    predictions=predict
+    dates=date
+    return render_template('/summary/index.html',user=x,predict=predict,date=date)
+
+@app.route('/get_pdf')
+def get_pdf():
+    global predictions
+    global dates
+    x = Record.query.filter_by(user_name=user).first()
+    res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
+    responsestring=pdfkit.from_string(res,False)
+    # print(type(responsestring))
+    response=make_response(responsestring)
+    response.headers['Content-Type']='application/pdf'
+    response.headers['Content-Disposition']='inline; filename=report.pdf'
+    return response
+    # print(res)
+    # return render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
+
 
 @app.route('/doctors')
 def doctors():
