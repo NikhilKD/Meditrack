@@ -5,14 +5,26 @@ from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
 from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
-from keys import config
+from keys import config,email
+from flask_mail import Mail, Message
 import datetime
 import pdfkit
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
 app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db','prediction':'sqlite:///prediction.db'}
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = email['Id']
+app.config['MAIL_PASSWORD'] = email['password']
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
+con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+# wkhtmltopdf\bin\wkhtmltopdf.exe
+
+mail = Mail(app)
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
@@ -312,16 +324,19 @@ def summary():
 def get_pdf():
     global predictions
     global dates
+    global user
+    global con
     x = Record.query.filter_by(user_name=user).first()
     res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
-    responsestring=pdfkit.from_string(res,False)
-    # print(type(responsestring))
+    responsestring=pdfkit.from_string(res,False,configuration=con)
     response=make_response(responsestring)
     response.headers['Content-Type']='application/pdf'
     response.headers['Content-Disposition']='inline; filename=report.pdf'
-    return response
-    # print(res)
-    # return render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
+    message = Message("Your Report", sender='nihilkd@gmail.com', recipients=[user])
+    message.attach('file.pdf', 'application/pdf', responsestring)
+
+    mail.send(message)
+    return "<h2>Your Report has been set to your email address</h2>"
 
 
 @app.route('/doctors')
