@@ -21,7 +21,8 @@ app.config['MAIL_PASSWORD'] = email['password']
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
-con = pdfkit.configuration(wkhtmltopdf='env\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+# wkhtmltopdf\bin\wkhtmltopdf.exe
 
 mail = Mail(app)
 db=SQLAlchemy(app)
