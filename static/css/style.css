@@ -303,7 +303,7 @@ body {
   flex-direction: column;
   position: relative;
   padding: 3%;
-  left: 10%;
+  left: 20%;
 }
 .question{
   width: 70%;
@@ -314,9 +314,16 @@ body {
           display: flex;
           flex-direction: column;
           align-items: left;
-          margin-top: 50px;
+          margin-top: 10px;
       }
 
+      p1 {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      
       form {
           width: 50%;
           background-color: #f2f2f2;
@@ -327,7 +334,7 @@ body {
       }
 
       h2 {
-          margin-bottom: 30px;
+          margin-bottom: 10px;
       }
 
       input[type="text"], input[type="number"], input[type="email"], input[type="password"] {
@@ -343,7 +350,7 @@ body {
           display: flex;
           flex-direction: column;
           align-items: center;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
       }
 
       .input-group {
@@ -372,9 +379,9 @@ body {
           background-color: #3e8e41;
       }
 
-.container1{
+/* .container1{
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: center;
   left: 10%;
-}
+} */
