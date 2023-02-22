@@ -1,12 +1,13 @@
 {% extends 'base.html' %} {% block body %}
 
-<p style="width:80vw;text-align: center;">
-  <button class="btn btn-primary" data-toggle="collapse" data-target="#bone_fracture">Bone Fracture</button>
-  <button class="btn btn-primary" data-toggle="collapse" data-target="#lung_disease">Lung Disease</button>
-  <button class="btn btn-primary" data-toggle="collapse" data-target="#heart_disease" >Heart Disease</button>
-  <button class="btn btn-primary" data-toggle="collapse" data-target="#diabetes_prediction"> Diabetes Detection</button>
+<p style="width: 80vw; text-align: center;">
+  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#bone_fracture">Bone Fracture</button>
+  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#lung_disease">Lung Disease</button>
+  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#heart_disease" >Heart Disease</button>
+  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#diabetes_prediction"> Diabetes Detection</button>
 </p>
-<div class="container1" style="overflow-y: scroll; height: 700px" id="myGroup">
+
+<div class="container1" style="overflow-y: scroll; height: 600px; " id="myGroup">
 <div class="col">
   <div class="row">
     <div class="collapse" id="bone_fracture"  data-parent="#myGroup">
