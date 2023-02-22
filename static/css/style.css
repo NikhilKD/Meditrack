@@ -303,7 +303,7 @@ body {
   flex-direction: column;
   position: relative;
   padding: 3%;
-  left: 10%;
+  left: 20%;
 }
 .question{
   width: 70%;
@@ -379,9 +379,9 @@ body {
           background-color: #3e8e41;
       }
 
-.container1{
+/* .container1{
   display: flex;
   flex-direction: column;
   position: center;
   left: 10%;
-}
+} */

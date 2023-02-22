@@ -1,13 +1,16 @@
 {% extends 'base.html' %} {% block body %}
 
-<p style="width: 80vw; text-align: center;">
-  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#bone_fracture">Bone Fracture</button>
-  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#lung_disease">Lung Disease</button>
-  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#heart_disease" >Heart Disease</button>
-  <button class="btn btn-primary" style="height: 3rem;" data-toggle="collapse" data-target="#diabetes_prediction"> Diabetes Detection</button>
-</p>
 
-<div class="container1" style="overflow-y: scroll; height: 600px; " id="myGroup">
+
+<div class="container1" style="overflow-y: scroll; height: 700px; overflow-x: hidden;" id="myGroup">
+  <p style="width: 50vw; text-align: center;">
+    <div class="col-auto d-flex flex-row" style="padding-left:130px;">
+      <button class="btn btn-dark" style="background-color: #11101D; height: 3rem; width: 15rem; margin-right:10px;" data-toggle="collapse" data-target="#bone_fracture">Bone Fracture</button>
+      <button class="btn btn-dark" style="background-color: #11101D; height: 3rem; width: 15rem; margin-right:10px;" data-toggle="collapse" data-target="#lung_disease">Lung Disease</button>
+      <button class="btn btn-dark" style="background-color: #11101D; height: 3rem; width: 15rem; margin-right:10px;" data-toggle="collapse" data-target="#heart_disease" >Heart Disease</button>
+      <button class="btn btn-dark" style="background-color: #11101D; height: 3rem; width: 15rem; margin-right:10px;" data-toggle="collapse" data-target="#diabetes_prediction"> Diabetes Detection</button>
+    </div>
+  </p>
 <div class="col">
   <div class="row">
     <div class="collapse" id="bone_fracture"  data-parent="#myGroup">
