@@ -2,18 +2,22 @@
 {% block body %}
     <div class="container1" >
         <h2>Enter the doctor details</h2>
+        <form method="POST">
         <div class="row">
                 <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Enter Specialist" aria-label="Doctor">
+                <input type="text" class="form-control" placeholder="Enter Specialist" name="doc" aria-label="Doctor">
                 </div>
                 <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Enter City" aria-label="Place">
+                <input type="text" class="form-control" placeholder="Enter City" name="location" aria-label="Place">
                 </div>
         </div>
         <button type="submit" class="btn btn-primary mb-3">Search</button>
+        </form>
         <br>
+        {% if doctor|length!=0 %}
         <h2>Doctors recommended</h2>
-        <table class="table table-dark table-hover" style="margin-top:5%;width:50%">
+        <div class="container1" style="align-items:center;overflow-y: scroll; height: 400px; overflow-x: hidden;">
+            <table class="table table-dark table-hover" >
             <thead>
                 <tr>
                     <th scope="col">Doctor Name</th>
@@ -22,17 +26,17 @@
                 </tr>
                 </thead>
                 <tbody>
+                    {% for i in doctor %}
                     <tr>
-                        <th scope="row">dr.abc</th>
-                        <th scope="row">abc nagar</th>
-                        <th scope="row">4.5</th>
+                        <th scope="row">{{i['name']}}</th>
+                        <th scope="row">{{i['vicinity']}}</th>
+                        <th scope="row">{{i['rating']}}</th>
                     </tr>
-                    <tr>
-                        <th scope="row">dr.pqr</th>
-                        <th scope="row">pqr nagar</th>
-                        <th scope="row">3.2</th>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+        </div>
+        {% endif %}
+
     </div>
 {% endblock body %}
