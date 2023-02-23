@@ -9,6 +9,10 @@ from sklearn.preprocessing import StandardScaler
 from keras.preprocessing.text import Tokenizer
 from keras_preprocessing.sequence import pad_sequences
 
+from keys import google
+import time
+import googlemaps # pip install googlemaps
+import pandas as pd # pip install pandas
 
 def bone_fracture():
     loaded_model=load_model("pred_models/best_model.h5")
@@ -113,3 +117,32 @@ def mental_health(text):
         return 'Depressed'
     else:
         return "Normal"
+
+def miles_to_meters(miles):
+    try:
+        return miles * 1_609.344
+    except:
+        return 0
+        
+
+def get_doctors(location,doctor):
+    API_KEY = google['API_KEY']
+    map_client = googlemaps.Client(API_KEY)
+
+    address = location
+    geocode = map_client.geocode(address=address)
+    (lat, lng) = map(geocode[0]['geometry']['location'].get, ('lat', 'lng'))
+
+
+    search_string = doctor
+    distance = miles_to_meters(2)
+    business_list = []
+
+    response = map_client.places_nearby(
+        location=(lat, lng),
+        keyword=search_string,
+        radius=distance
+    )   
+
+    business_list.extend(response.get('results'))
+    return business_list

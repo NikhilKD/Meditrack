@@ -426,7 +426,11 @@ section:nth-child(even){
     font-weight: bold;
     margin-bottom: 1rem;
     text-align: center;
+<<<<<<< HEAD
+    padding-left: 33%;
+=======
     padding-left: 36.6%;
+>>>>>>> 1c243ae00caa6ad579cb41b4be5e7afb1655d2a7
   }
   
   .footer .box-elements {

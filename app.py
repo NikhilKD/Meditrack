@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename
 import uuid
 from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health
+from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health,get_doctors
 from keys import config,email
 from flask_mail import Mail, Message
 import datetime
@@ -52,9 +52,9 @@ class Record(db.Model):
 class Data(db.Model):
     __bind_key__ = 'data'
     user_name=db.Column(db.String(100),nullable=False)
-    img = db.Column(db.Text, unique=True, primary_key=True)
+    img = db.Column(db.Text, unique=True)
     name = db.Column(db.Text, nullable=False)
-    uid = db.Column(db.Text, unique=True, nullable=False)
+    uid = db.Column(db.Text, unique=True, nullable=False,primary_key=True)
 
 
 class Prediction(db.Model):
@@ -339,10 +339,16 @@ def get_pdf():
     return "<h2>Your Report has been set to your email address</h2>"
 
 
-@app.route('/doctors')
+@app.route('/doctors',methods=['POST','GET'])
 def doctors():
     x = Record.query.filter_by(user_name=user).first()
-    return render_template('/doctors/index.html',user=x)
+    if request.method=='POST':
+        location=request.form.get("location"),
+        doc=request.form.get("doc")
+        doctors_list=get_doctors(location[0],doc)
+        return render_template('/doctors/index.html',user=x,doctor=doctors_list)
+    else:
+        return render_template('/doctors/index.html',user=x)
 
 # add report
 @app.route('/add_report')
