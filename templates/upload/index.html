@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
     <div class="container1">
+        <h2>
+            Add your files here 
+        </h2>
         <form action="/upload" enctype="multipart/form-data" method="POST">
             <div class="form-group" >
-                <input type="file" class="form-control-file" name="file">
+                <input type="file" style="margin:20px 0px 20px 90px ;" name="file" />
                 <button type="submit" value="Upload File" class="btn btn-outline-success">Upload</button>
             </div>
         </form>

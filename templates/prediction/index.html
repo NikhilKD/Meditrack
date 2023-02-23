@@ -1,9 +1,4 @@
 {% extends 'base.html' %} {% block body %}
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 5ada850ed6a9c20e967bc3a730e6eae02c488b70
 <div class="container1" style="overflow-y: scroll; height: 700px; overflow-x: hidden;" id="myGroup">
   <p style="width: 50vw; text-align: center;">
     <div class="col-auto d-flex flex-row" style="padding-left:130px;">
@@ -21,7 +16,7 @@
             <h2>Bone Fracture Detection</h2>
             <form action="/bone_fracture" enctype="multipart/form-data" method="POST">
               <div class="form-group">
-                <input type="file" class="form-control-file" name="file" />
+                <input type="file" style="margin:20px 0px 20px 90px ;" name="file" />
                 <button
                   type="submit"
                   value="Upload File"
@@ -42,7 +37,7 @@
           <h2>Lung Pneumonia Detection</h2>
           <form action="/lung_disease" enctype="multipart/form-data" method="POST">
             <div class="form-group">
-              <input type="file" class="form-control-file" name="file" />
+              <input type="file" style="margin:20px 0px 20px 90px ;" name="file" />
               <button
                 type="submit"
                 value="Upload File"

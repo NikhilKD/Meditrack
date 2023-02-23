@@ -10,7 +10,6 @@ from flask_mail import Mail, Message
 import datetime
 import pdfkit
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
 app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db','prediction':'sqlite:///prediction.db'}
@@ -19,7 +18,7 @@ app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = email['Id']
 app.config['MAIL_PASSWORD'] = email['password']
 app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_SSL'] = True 
 
 con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 # wkhtmltopdf\bin\wkhtmltopdf.exe
@@ -171,7 +170,7 @@ def upload():
     if request.method == 'POST':
         pic=request.files['file']
         if not pic:
-            return "<h2> No Pic Uploaded</h2>\n"
+            return "<h2> No Pic Uploaded</h2>" 
         print (uuid.uuid1())
         fileName=secure_filename(pic.filename)
         uid=uuid.uuid1()
@@ -179,7 +178,7 @@ def upload():
         img=Data(user_name=user,img=pic.read(),name=fileName,uid=uid)
         db.session.add(img)
         db.session.commit()
-    return "<h2>Got it!</h2>"
+    return redirect('/dashboard')
 
 # Prediction
 @app.route('/prediction')
