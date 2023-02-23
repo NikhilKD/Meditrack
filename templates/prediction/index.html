@@ -1,7 +1,4 @@
 {% extends 'base.html' %} {% block body %}
-
-
-
 <div class="container1" style="overflow-y: scroll; height: 700px; overflow-x: hidden;" id="myGroup">
   <p style="width: 50vw; text-align: center;">
     <div class="col-auto d-flex flex-row" style="padding-left:130px;">
@@ -25,7 +22,7 @@
                   value="Upload File"
                   class="btn btn-outline-success"
                 >
-                  Upload
+                  Predict
                 </button>
               </div>
             </form>
@@ -37,7 +34,7 @@
     <div class="collapse" id="lung_disease" data-parent="#myGroup">
       <div class="card card-body">
         <div class="container">
-          <h2>Lung Disease Detection</h2>
+          <h2>Lung Pneumonia Detection</h2>
           <form action="/lung_disease" enctype="multipart/form-data" method="POST">
             <div class="form-group">
               <input type="file" class="form-control-file" name="file" />
@@ -46,7 +43,7 @@
                 value="Upload File"
                 class="btn btn-outline-success"
               >
-                Upload
+                Predict
               </button>
             </div>
           </form>
