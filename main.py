@@ -6,7 +6,9 @@ import numpy as np
 # from keras import Sequential
 from keras.layers import *
 from keras.models import * 
+from keras.applications.vgg16 import preprocess_input
 # from keras.preprocessing import image
+# from keras.preprocessing.image import ImageDataGenerator
 # from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras.utils import load_img, img_to_array
 
@@ -91,8 +93,8 @@ from keras.utils import load_img, img_to_array
 # # plt.imshow(img)
 # print("THE UPLOADED X-RAY IMAGE IS: "+str(op))
 # model.save("model.h5")
-loaded_model=load_model("best_model.h5")
-def ans():
+def bone_fracture():
+    loaded_model=load_model("best_model.h5")
     img = load_img('image123.jpg',target_size=(224,224))
     imag = img_to_array(img)
     imaga = np.expand_dims(imag,axis=0) 
@@ -104,6 +106,17 @@ def ans():
         op="Normal"
     return "THE UPLOADED X-RAY IMAGE IS: "+str(op)
 
+def lung_disease():
+    loaded_model=load_model("lungpred.h5")
+    img=load_img('lung_disease.jpg',target_size=(224,224))
+    x=img_to_array(img)
+    x=np.expand_dims(x,axis=0)
+    img_data=preprocess_input(x)
+    classes=loaded_model.predict(img_data)
+    if classes[0][0]==0.0 and classes[0][1]==1.0:
+        return "the person has pneumonia"
+    elif classes[0][0]==1.0 and classes[0][1]==0.0:
+        return "the person is normal"
 
 # img = load_img('image123.jpg',target_size=(224,224))
 # print(type(img))
