@@ -1,100 +1,21 @@
 import numpy as np 
-# import pandas as pd
-# import matplotlib.pyplot as plt
-# import tensorflow as tf
-# print(tf.__version__)
-# from keras import Sequential
 from keras.layers import *
 from keras.models import * 
 from keras.applications.vgg16 import preprocess_input
-# from keras.preprocessing import image
-# from keras.preprocessing.image import ImageDataGenerator
-# from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras.utils import load_img, img_to_array
+import pickle
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from keras.preprocessing.text import Tokenizer
+from keras_preprocessing.sequence import pad_sequences
 
-# import os
-# for dirname, _, filenames in os.walk('/kaggle/input'):
-#     for filename in filenames:
-#         print(os.path.join(dirname, filename))
+from keys import google
+import time
+import googlemaps # pip install googlemaps
+import pandas as pd # pip install pandas
 
-# train_path= 'dataset/archive (6)/train'
-# test_path='dataset/archive (6)/val'
-# train_datagen = image.ImageDataGenerator(
-#     rotation_range=15,
-#     shear_range=0.2,
-#     zoom_range=0.2,
-#     horizontal_flip=True,
-#     fill_mode='nearest',
-#     width_shift_range=0.1,
-#     height_shift_range=0.1
-# )
-# val_datagen= image.ImageDataGenerator(    rotation_range=15,
-#     shear_range=0.2,
-#     zoom_range=0.2,
-#     horizontal_flip=True,
-#     fill_mode='nearest',
-#     width_shift_range=0.1,
-#     height_shift_range=0.1)
-
-# train_generator = train_datagen.flow_from_directory(
-#     train_path,
-#     target_size = (224,224),
-#     batch_size = 4,
-#     class_mode = 'binary')
-# validation_generator = val_datagen.flow_from_directory(
-#     test_path,
-#     target_size = (224,224),
-#     batch_size = 4,
-#     shuffle=True,
-#     class_mode = 'binary')
-
-# base_model = tf.keras.applications.EfficientNetB3(weights='imagenet', input_shape=(224,224,3), include_top=False)
-
-# for layer in base_model.layers:
-#     layer.trainable=False
-# model = Sequential()
-# model.add(base_model)
-# model.add(GaussianNoise(0.25))
-# model.add(GlobalAveragePooling2D())
-# model.add(Dense(512,activation='relu'))
-# model.add(BatchNormalization())
-# model.add(GaussianNoise(0.25))
-# model.add(Dropout(0.25))
-# model.add(Dense(1, activation='sigmoid'))
-# model.summary()
-
-# model.compile(loss='binary_crossentropy',
-#             optimizer='adam',
-#             metrics=['accuracy','Precision','Recall','AUC'])
-
-# lrp=ReduceLROnPlateau(monitor="val_loss", factor=0.1, patience=2)
-# filepath='best_model.h5'
-# checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
-# call=[checkpoint,lrp]
-# history = model.fit(
-#     train_generator,
-#     epochs=10,
-#     validation_data=validation_generator,
-#     steps_per_epoch= 50,
-#     callbacks=call
-#     )
-
-# model.evaluate(train_generator)
-# model.evaluate(validation_generator)
-
-
-# ypred = model.predict(imaga)
-# print(ypred)
-# a=ypred[0]
-# if a<0.5:
-#     op="Fracture"   
-# else:
-#     op="Normal"
-# # plt.imshow(img)
-# print("THE UPLOADED X-RAY IMAGE IS: "+str(op))
-# model.save("model.h5")
 def bone_fracture():
-    loaded_model=load_model("best_model.h5")
+    loaded_model=load_model("pred_models/best_model.h5")
     img = load_img('image123.jpg',target_size=(224,224))
     imag = img_to_array(img)
     imaga = np.expand_dims(imag,axis=0) 
@@ -104,29 +25,124 @@ def bone_fracture():
         op="Fracture"   
     else:
         op="Normal"
-    return "THE UPLOADED X-RAY IMAGE IS: "+str(op)
+    return str(op)
+
 
 def lung_disease():
-    loaded_model=load_model("lungpred.h5")
-    img=load_img('lung_disease.jpg',target_size=(224,224))
-    x=img_to_array(img)
-    x=np.expand_dims(x,axis=0)
-    img_data=preprocess_input(x)
-    classes=loaded_model.predict(img_data)
-    if classes[0][0]==0.0 and classes[0][1]==1.0:
-        return "the person has pneumonia"
-    elif classes[0][0]==1.0 and classes[0][1]==0.0:
-        return "the person is normal"
+    check='lung_disease.jpg'
+    model=load_model("pred_models/Pneumonia.h5")
+    img=load_img(check, target_size=(150, 150), grayscale=True)
+    img=np.array(img)/255
+    img=img.reshape(-1,150,150,1)
+    isPneumonic=model.predict(img)[0]
+    imgClass='Pneumonic' if isPneumonic<0.5 else 'Normal'
+    return imgClass
 
-# img = load_img('image123.jpg',target_size=(224,224))
-# print(type(img))
-# imag = img_to_array(img)
-# imaga = np.expand_dims(imag,axis=0) 
-# loaded_m=load_model("model.h5")
-# r=loaded_m.predict(imaga)
-# b=r[0]
-# if b<0.5:
-#     op="Fracture"   
-# else:
-#     op="Normal"
-# print("THE UPLOADED X-RAY IMAGE IS: "+str(op))
+#Diabetes:----------------------------------------------------------------
+def diabetes_predict(p,g,bp,st,insulin,bmi,dpf,age):
+    load_m1=pickle.load(open("pred_models/modelnaivebayes.pkl","rb"))
+    load_m2=pickle.load(open("pred_models/modelrandomforest.pkl","rb"))
+    y_pred = load_m1.predict([[p,g,bp,st,insulin,bmi,dpf,age]])
+    y_pre= load_m2.predict([[p,g,bp,st,insulin,bmi,dpf,age]])
+    print(y_pred)
+    print(y_pre)
+    if y_pred==1 and y_pre==1:
+        return "Diabetic"
+    else:
+        return "Non Diabetic"
+
+#Insurance-------------------------------------------------------
+def insurance_pre(a,g,b,c,s,r):
+    loaded_model=pickle.load(open('pred_models/modelregress.pkl','rb'))
+    input_data = (a,g,b,c,s,r)
+    # age=int
+    # gender=0 for male 1 for female  
+    # bmi=float
+    # children=int
+    # smoker=0 for yes 1 for no
+    # 'region':{'southeast':0,'southwest':1,'northeast':2,'northwest':3}
+    # changing input_data to a numpy array
+    input_data_as_numpy_array = np.asarray(input_data)
+
+    # reshape the array
+    input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+    res=loaded_model.predict(input_data_reshaped)
+    inr = res[0] * 82.52
+    inr=inr/10
+    print(res[0])
+    return f'The insurance cost is Rs {str(round(inr,2))} approx'
+
+#heart disease-----------------------------------------------------------
+def heart_prediction(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal):
+
+    inputdata=(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
+
+    inputdata_asnumpyarray=np.asarray(inputdata) #changing the input for the numpy array
+
+    inputdata_reshape=inputdata_asnumpyarray.reshape(1,-1)
+
+    filename='pred_models/heartdis_pred_model'
+
+    loadedmodel=pickle.load(open(filename,'rb'))
+
+    cred=loadedmodel.predict(inputdata_reshape)
+    if(cred[0]==0):
+        return 'Healthy heart'
+    else:
+        return 'Heart Disease'
+
+#Depression----------------------------------------------------------------------------------------
+def predict_sentiment1(text):
+    max_vocab = 20000000
+    tokenizer = Tokenizer(num_words=max_vocab)
+    data = pd.read_csv('csv_file/data1.csv')
+    a=data.text.values
+    tokenizer.fit_on_texts(a)
+    load=load_model('pred_models/tweetanalysis.h5',compile=False)
+    text_seq = tokenizer.texts_to_sequences(text)
+    text_pad = pad_sequences(text_seq, maxlen=942)
+    predicted_sentiment = load.predict(text_pad).round()
+    if predicted_sentiment == 1.0:
+        return 'depressed'
+    else:
+        return 'normal'
+    
+def mental_health(text):
+    count=0
+    for i in text:
+        if predict_sentiment1(i)=='depressed':
+            count+=1
+    if count>=2:
+        return 'Depressed'
+    else:
+        return "Normal"
+
+def miles_to_meters(miles):
+    try:
+        return miles * 1_609.344
+    except:
+        return 0
+        
+
+def get_doctors(location,doctor):
+    API_KEY = google['API_KEY']
+    map_client = googlemaps.Client(API_KEY)
+
+    address = location
+    geocode = map_client.geocode(address=address)
+    (lat, lng) = map(geocode[0]['geometry']['location'].get, ('lat', 'lng'))
+
+
+    search_string = doctor
+    distance = miles_to_meters(2)
+    business_list = []
+
+    response = map_client.places_nearby(
+        location=(lat, lng),
+        keyword=search_string,
+        radius=distance
+    )   
+
+    business_list.extend(response.get('results'))
+    return business_list

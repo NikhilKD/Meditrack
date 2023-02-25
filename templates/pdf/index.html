@@ -1,0 +1,75 @@
+<style>
+    h2{
+        text-align: center;
+    }
+    .container{
+        width: 90%;
+        text-align: justify;
+        position: relative;
+        left: 5%;
+        font-family: 'Poppins', sans-serif;
+    }
+    span{
+        font-weight: bold;
+    }
+
+</style>
+<div class="container">
+    <h2>Medtrack Report</h2>
+    <div class="profile">
+        Name : {{profile.name}}
+        <br>
+        Email ID : {{profile.user_name}}
+        <br>
+        Date of Birth : {{profile.date}}
+        <br>
+        Adhaar : {{profile.aadhar}}
+        <br>
+    </div>
+    <br>
+    <h3>Bone Fractrure</h3>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ut voluptas quisquam accusamus numquam asperiores commodi cumque minus quod natus, earum tempora cupiditate consequatur inventore ipsam. Facere sapiente, magni vero ab possimus esse nulla tempore nisi fuga rem, iusto laborum in sunt! Dolor recusandae rerum nemo reprehenderit exercitationem sunt eos.
+        <br>
+        Result: <span>{{predict.bone_fracture}}</span>
+        <br>
+        Date of Prediction: <span>{{date.bone_fracture}}</span>
+    </p>
+    <br>
+    <h3>Diabetes</h3>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ut voluptas quisquam accusamus numquam asperiores commodi cumque minus quod natus, earum tempora cupiditate consequatur inventore ipsam. Facere sapiente, magni vero ab possimus esse nulla tempore nisi fuga rem, iusto laborum in sunt! Dolor recusandae rerum nemo reprehenderit exercitationem sunt eos.
+        <br>
+        Result: <span>{{predict.diabetes}}</span>
+        <br>
+        Date of Prediction: <span>{{date.diabetes}}</span>
+    </p>
+    <br>
+    <h3>Heart Report</h3>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ut voluptas quisquam accusamus numquam asperiores commodi cumque minus quod natus, earum tempora cupiditate consequatur inventore ipsam. Facere sapiente, magni vero ab possimus esse nulla tempore nisi fuga rem, iusto laborum in sunt! Dolor recusandae rerum nemo reprehenderit exercitationem sunt eos.
+        <br>
+        Result: <span>{{predict.heart_prediction}}</span>
+        <br>
+        Date of Prediction: <span>{{date.heart_prediction}}</span>
+    </p>
+    <br>
+    <h3>Lung Report</h3>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ut voluptas quisquam accusamus numquam asperiores commodi cumque minus quod natus, earum tempora cupiditate consequatur inventore ipsam. Facere sapiente, magni vero ab possimus esse nulla tempore nisi fuga rem, iusto laborum in sunt! Dolor recusandae rerum nemo reprehenderit exercitationem sunt eos.
+        <br>
+        Result: <span>{{predict.lung_disease}}</span>
+        <br>
+        Date of Prediction: <span>{{date.lung_disease}}</span>
+    </p>
+    <br>
+    <h3>Depression</h3>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ut voluptas quisquam accusamus numquam asperiores commodi cumque minus quod natus, earum tempora cupiditate consequatur inventore ipsam. Facere sapiente, magni vero ab possimus esse nulla tempore nisi fuga rem, iusto laborum in sunt! Dolor recusandae rerum nemo reprehenderit exercitationem sunt eos.
+        <br>
+        Result: <span>{{predict.depression}}</span>
+        <br>
+        Date of Prediction: <span>{{date.depression}}</span>
+    </p>
+</div>
+

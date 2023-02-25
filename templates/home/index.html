@@ -1,171 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditrack</title>
 
-  <title>MediTrack</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <!-- Favicons -->
-  <!-- <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home/style.css') }}">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="{{ url_for('static', filename='css/home/assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/home/assets/vendor/bootstrap/css/bootstrap.min.css') }}"  rel="stylesheet">
-  
-  <!-- Template Main CSS File -->
-  <link href="{{ url_for('static', filename='css/home/assets/css/style.css') }}" rel="stylesheet">
 </head>
-
 <body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
-      <img width="30px" src="{{ url_for('static', filename='css/home/Meditrack logo.png') }}" alt="">
-      <h1 class="logo me-auto"><a href="index.html">MediTrack</a></h1>
+    
+<!-- header section starts  -->
+
+<header class="header">
+
+    <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> MediTrack </a>
+
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#services">services</a>
+        <a href="#about">about</a>
+        <!-- <a href="#doctors">doctors</a> -->
+        <!-- <a href="#book">book</a> -->
+        <a href="#review">review</a>
+        <a href="#blogs">blogs</a>
+    </nav>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="image">
+        <img src="{{ url_for('static', filename='css/home/assets/image/home-img.svg') }}" alt="">
     </div>
-  </header><!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container">
-      <h1>Welcome to MediTrack</h1>
-      <h2>Your health our priority!</h2>
-      <a href="{{ url_for('signUp') }}"class="btn-get-started scrollto"> Register now</a>
+    <div class="content">
+        <h3>stay safe, stay healthy</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem sed autem vero? Magnam, est laboriosam!</p>
+        <a href="/signUp" class="btn"> Register <span class="fas fa-chevron-right"></span> </a>
     </div>
-  </section><!-- End Hero -->
 
-  <main id="main">
+</section>
 
-    <!-- ======= Why Us Section ======= -->
-    <section id="why-us" class="why-us">
-      <div class="container">
+<!-- home section ends -->
 
-        <div class="row">
-          <div class="col-lg-4 d-flex align-items-stretch">
+
+<!-- services section starts  -->
+
+<section class="services" id="services">
+
+    <h1 class="heading"> our <span>services</span> </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <i class="fas fa-notes-medical"></i>
+            <h3>free checkups</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+        <div class="box">
+            <i class="fas fa-ambulance"></i>
+            <h3>24/7 ambulance</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+        <div class="box">
+            <i class="fas fa-user-md"></i>
+            <h3>expert doctors</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+        <div class="box">
+            <i class="fas fa-pills"></i>
+            <h3>medicines</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+        <div class="box">
+            <i class="fas fa-procedures"></i>
+            <h3>bed facility</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+        <div class="box">
+            <i class="fas fa-heartbeat"></i>
+            <h3>total care</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- services section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <h1 class="heading"> <span>about</span> us </h1>
+
+    <div class="row">
+
+        <div class="image">
+            <img src="image/about-img.svg" alt="">
+        </div>
+
+        <div class="content">
+            <h3>we take care of your healthy life</h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure ducimus, quod ex cupiditate ullam in assumenda maiores et culpa odit tempora ipsam qui, quisquam quis facere iste fuga, minus nesciunt.</p>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus vero ipsam laborum porro voluptates voluptatibus a nihil temporibus deserunt vel?</p>
+            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<!-- review section starts  -->
+
+<section class="review" id="review">
+    
+    <h1 class="heading"> client's <span>review</span> </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <img src="image/pic-1.png" alt="">
+            <h3>john deo</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam sapiente nihil aperiam? Repellat sequi nisi aliquid perspiciatis libero nobis rem numquam nesciunt alias sapiente minus voluptatem, reiciendis consequuntur optio dolorem!</p>
+        </div>
+
+        <div class="box">
+            <img src="image/pic-2.png" alt="">
+            <h3>john deo</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam sapiente nihil aperiam? Repellat sequi nisi aliquid perspiciatis libero nobis rem numquam nesciunt alias sapiente minus voluptatem, reiciendis consequuntur optio dolorem!</p>
+        </div>
+
+        <div class="box">
+            <img src="image/pic-3.png" alt="">
+            <h3>john deo</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam sapiente nihil aperiam? Repellat sequi nisi aliquid perspiciatis libero nobis rem numquam nesciunt alias sapiente minus voluptatem, reiciendis consequuntur optio dolorem!</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- review section ends -->
+
+<!-- blogs section starts  -->
+
+<section class="blogs" id="blogs">
+
+    <h1 class="heading"> our <span>blogs</span> </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <div class="image">
+                <img src="image/blog-1.jpg" alt="">
+            </div>
             <div class="content">
-              <h3>Why Choose MediTrack?</h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
-              </p>
+                <div class="icon">
+                    <a href="#"> <i class="fas fa-calendar"></i> 1st may, 2021 </a>
+                    <a href="#"> <i class="fas fa-user"></i> by admin </a>
+                </div>
+                <h3>blog title goes here</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident, eius.</p>
+                <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
             </div>
-          </div>
-          <div class="col-lg-8 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-receipt"></i>
-                    <h4>Corporis voluptates sit</h4>
-                    <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-cube-alt"></i>
-                    <h4>Ullamco laboris ladore pan</h4>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-images"></i>
-                    <h4>Labore consequatur</h4>
-                    <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End .content-->
-          </div>
         </div>
 
+        <div class="box">
+            <div class="image">
+                <img src="image/blog-2.jpg" alt="">
+            </div>
+            <div class="content">
+                <div class="icon">
+                    <a href="#"> <i class="fas fa-calendar"></i> 1st may, 2021 </a>
+                    <a href="#"> <i class="fas fa-user"></i> by admin </a>
+                </div>
+                <h3>blog title goes here</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident, eius.</p>
+                <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="image">
+                <img src="image/blog-3.jpg" alt="">
+            </div>
+            <div class="content">
+                <div class="icon">
+                    <a href="#"> <i class="fas fa-calendar"></i> 1st may, 2021 </a>
+                    <a href="#"> <i class="fas fa-user"></i> by admin </a>
+                </div>
+                <h3>blog title goes here</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident, eius.</p>
+                <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- blogs section ends -->
+
+<!-- footer section starts  -->
+
+<section class="footer">
+    <div class="box-container">
+      <div class="box">
+        <h3>Contact Info</h3>
+        <div class="box-elements">
+          <a href="#"><i class="fas fa-phone"></i> +91-7694819650</a>
+          <a href="#"><i class="fas fa-phone"></i> +91-9876543210</a>
+          <a href="#"><i class="fas fa-envelope"></i> meditrack@gmail.com</a>
+          <a href="#"><i class="fas fa-map-marker-alt"></i> Bhopal, India</a>
+        </div>
       </div>
-    </section><!-- End Why Us Section -->
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Services</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-heartbeat"></i></div>
-              <h4><a href="">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-pills"></i></div>
-              <h4><a href="">Sed ut perspiciatis</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-hospital-user"></i></div>
-              <h4><a href="">Magni Dolores</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-dna"></i></div>
-              <h4><a href="">Nemo Enim</a></h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-wheelchair"></i></div>
-              <h4><a href="">Dele cardo</a></h4>
-              <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-notes-medical"></i></div>
-              <h4><a href="">Divera don</a></h4>
-              <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Services Section -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>MediTrack</h3>
-          </div>
+  
+      <div class="box">
+        <h3>Follow Us</h3>
+        <div class="box-elements">
+          <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
         </div>
       </div>
     </div>
-  </footer><!-- End Footer -->
-</body>
+  
+    <div class="credit"> created by <span>Team MediTrack</span> | all rights reserved </div>
 
+</section>
+
+<script>
+    let menu = document.querySelector('#menu-btn');
+let navbar = document.querySelector('.navbar');
+
+menu.onclick = () =>{
+    menu.classList.toggle('fa-times');
+    navbar.classList.toggle('active');
+}
+
+window.onscroll = () =>{
+    menu.classList.remove('fa-times');
+    navbar.classList.remove('active');
+}
+</script>
+
+</body>
 </html>

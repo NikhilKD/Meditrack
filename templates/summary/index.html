@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container1" >
+        <h2>Prediction Report</h2>
+        <table class="table table-dark table-hover" style="margin-top:5%;width:50%">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Prediction Result</th>
+                <th scope="col">Date of Prediction</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Bone Fracture</th>
+                    <td>{{predict.bone_fracture}}</td>
+                    <td>{{date.bone_fracture}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Heart Disease</th>
+                    <td>{{predict.heart_prediction}}</td>
+                    <td>{{date.heart_prediction}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Lung Disease</th>
+                    <td>{{predict.lung_disease}}</td>
+                    <td>{{date.lung_disease}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Diabetes</th>
+                    <td>{{predict.diabetes}}</td>
+                    <td>{{date.diabetes}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Depression</th>
+                    <td>{{predict.depression}}</td>
+                    <td>{{date.depression}}</td>
+                </tr>
+            </tbody>
+          </table>
+          <a href="/get_pdf"><button class="btn btn-outline-success">Get Report</button></a>
+    </div>
+{% endblock body %}

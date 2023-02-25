@@ -1,7 +1,6 @@
 ul li{
     list-style: none;
 }
-
 /* Google Font Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
@@ -304,8 +303,85 @@ body {
   flex-direction: column;
   position: relative;
   padding: 3%;
-  left: 10%;
+  left: 20%;
 }
 .question{
   width: 70%;
 }
+
+
+      .container {
+          display: flex;
+          flex-direction: column;
+          align-items: left;
+          margin-top: 10px;
+      }
+
+      p1 {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      
+      form {
+          width: 50%;
+          background-color: #f2f2f2;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          text-align: center;
+      }
+
+      h2 {
+          margin-bottom: 10px;
+      }
+
+      input[type="text"], input[type="number"], input[type="email"], input[type="password"] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+      }
+
+      .form-group {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 10px;
+      }
+
+      .input-group {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+      }
+
+      label {
+          margin-right: 10px;
+      }
+
+      input[type="submit"], .btn {
+          width: 30%;
+          padding: 12px 20px;
+          border-radius: 5px;
+          border: none;
+          background-color: green;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+      }
+
+      input[type="submit"]:hover, .btn:hover {
+          background-color: #3e8e41;
+      }
+
+/* .container1{
+  display: flex;
+  flex-direction: column;
+  position: center;
+  left: 10%;
+} */
