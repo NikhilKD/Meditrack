@@ -362,4 +362,4 @@ def profile():
     return render_template('/profile/index.html',user=x)
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=4000, debug=True)
+    app.run(host="localhost", port=3000, debug=True)
