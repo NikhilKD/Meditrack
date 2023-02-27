@@ -361,5 +361,5 @@ def profile():
     x = Record.query.filter_by(user_name=user).first()
     return render_template('/profile/index.html',user=x)
 
-if __name__ == "__main__":
-    app.run(host="localhost", port=4000, debug=True)
+# if __name__ == "__main__":
+#     app.run(host="localhost", port=3000, debug=True)
