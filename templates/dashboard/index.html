@@ -1,34 +1,42 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+  h4{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    left: 10%;
+    padding-top: 3%;
+  }
+</style>
 
-<div class="container1" style="margin-left:130px; padding-top: 20px;">
-    <h3>
-      Hello, {{ user.name }}
-    </h3>
-    <h4>
-      Here is your medical record:
-    </h4>
-</div>
-    <table class="table table-dark table-hover" id="images" >
-        <thead>
+{% if img|length!=0 %}
+  <h4>
+    Here is your medical record:
+  </h4>
+  <table class="table table-dark table-hover" id="images" >
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">File Name</th>
+          <th scope="col">UID</th>
+          <th scope="col">Download</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for i in img %}
           <tr>
-            <th scope="col">S.No</th>
-            <th scope="col">File Name</th>
-            <th scope="col">UID</th>
-            <th scope="col">Download</th>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{i.name}}</td>
+              <td>{{i.uid}}</td>
+              <td>
+                  <button a href="/download/{{i.uid}}" type="button" class="btn btn-outline-success" style="width: 100px;">Download</button>
+              </td>
           </tr>
-        </thead>
-        <tbody>
-            {% for i in img %}
-            <tr>
-                <th scope="row">{{loop.index}}</th>
-                <td>{{i.name}}</td>
-                <td>{{i.uid}}</td>
-                <td>
-                    <button a href="/download/{{i.uid}}" type="button" class="btn btn-outline-success" style="width: 100px;">Download</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-      </table>
+          {% endfor %}
+      </tbody>
+    </table>
+{% else %}
+    <h3>No Records Found</h3>
+{% endif %}
+
 {% endblock body %}
