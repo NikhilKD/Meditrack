@@ -1,21 +1,40 @@
 {% extends 'base.html' %}
 {% block body %}
+    <style>
+        h2{
+            margin-bottom: 3%;
+        }
+        .container1{
+            display:flex;
+            flex-direction:column;
+            position: relative;
+            left:10%;
+            padding: 3% 0%;
+        }
+        form{
+            width:70%;
+        }
+        h2{
+            position:relative;
+            left:25%;
+        }
+    </style>
     <div class="container1" >
         <h2>Depression Detection</h2>
         <form action="/mental_predict" method="POST">
             <div class="question">
-                <label for="exampleFormControlTextarea1" class="form-label">How are you feeling today?</label>
-                <textarea class="form-control" name="question1" id="exampleFormControlTextarea1"  rows="3"></textarea>
+                <label for="exampleFormControlTextarea1" class="elements" class="form-label">Over the past two weeks, how often have you been bothered by feeling down, depressed or hopeless?</label>
+                <textarea class="form-control" class="elements" name="question1" rows="3" ></textarea>
             </div>
             <div class="question">
-                <label for="exampleFormControlTextarea1" class="form-label">Do you often have thoughts of dying?</label>
-                <textarea class="form-control" name="question2" id="exampleFormControlTextarea1"  rows="3"></textarea>
+                <label for="exampleFormControlTextarea1" class="elements" class="form-label">Have you lost interest in things you used to enjoy doing?</label>
+                <textarea class="form-control" class="elements" name="question2" rows="3"></textarea>
             </div>
             <div class="question">
-                <label for="exampleFormControlTextarea1" class="form-label">What are your constant moods these days?</label>
-                <textarea class="form-control" name="question3" id="exampleFormControlTextarea1"  rows="3"></textarea>
+                <label for="exampleFormControlTextarea1" class="elements" class="form-label">Have you been feeling tired or fatigued recently, even after getting enough sleep?</label>
+                <textarea class="form-control" class="elements" name="question3" rows="3"></textarea>
             </div>
-            <button type="submit" value="Upload File" class="btn btn-outline-success" style="margin-top:3%">Upload</button>
+            <button type="submit" class="btn btn-outline-success" style="margin-top:3%">Predict</button>
         </form>
     </div>
 {% endblock body %}
