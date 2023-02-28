@@ -1,39 +1,85 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container1" >
-        <h2>Insurance Prediction</h2>
-        <form action="/insurance_predict" method="POST">
-            <div class="form-group" >
-                <input type="text" placeholder="Age" name="age">
-                <div class="input-group">
-                    <label class="form-label">Gender</label>
-                    <input type="radio" name="gender" value="0"/>
-                    <label >Male</label>
-                    <input type="radio" name="gender" value="1"/>
-                    <label >Female</label>
+    <style>
+        .container1 {
+            position: relative;
+            left: 20%;
+            padding-top: 3%;
+        }
+        .radio-button{
+            margin-bottom: 1%;
+            margin-right: 2%;
+        }
+        .modal-backdrop{
+            z-index: -2;
+        }
+    </style>
+            <div class="modal fade" id="popup-dialog" tabindex="-1" role="dialog" aria-labelledby="popup-dialog-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="popup-dialog-label">Your Inssurance Amount</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <p>{{ans}}</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <input type="text" placeholder="BMI" name="bmi">
-                <input type="text" placeholder="children" name="child">
-                <div class="input-group">
-                    <label class="form-label">Are you a smoker?</label>
-                    <input type="radio" name="smoke" value="0"/>
-                    <label >Yes</label>
-                    <input  type="radio" name="smoke" value="1"/>
-                    <label >No</label>
-                </div>
-                <div class="input-group">
-                    <label class="form-label">Enter your Region</label>
-                    <input type="radio" name="region" value="0"/>
-                    <label >southeast</label>
-                    <input type="radio" name="region" value="1"/>
-                    <label >southwest</label>
-                    <input  type="radio" name="region" value="2"/>
-                    <label >northeast</label>
-                    <input  type="radio" name="region" value="3"/>
-                    <label >northwest</label>
                 </div>
             </div>
-                <button type="submit" class="btn btn-outline-success">Predict</button>
+
+    <div class="container1" >
+        <h2>Insurance Prediction</h2>
+        <form method="POST">
+            <div class="form-group" >
+                <label class="form-label">Age:</label>
+                <input type="text" placeholder="Enter your age" name="age">
+                <label class="form-label">Gender</label>
+                <div class="input-group">
+                    <input class="radio-button" type="radio" name="gender" value="0"/>
+                    <label >Male</label>
+                    <input class="radio-button" type="radio" name="gender" value="1"/>
+                    <label >Female</label>
+                </div>
+                <label class="form-label">BMI</label>
+                <input type="text" placeholder="Enter your BMI" name="bmi">
+                <label class="form-label">Children</label>
+                <input type="text" placeholder="Enter number of children" name="child">
+                <label class="form-label">Are you a smoker?</label>
+                <div class="input-group">
+                    <input class="radio-button" type="radio" name="smoke" value="0"/>
+                    <label >Yes</label>
+                    <input class="radio-button"  type="radio" name="smoke" value="1"/>
+                    <label >No</label>
+                </div>
+                <label class="form-label">Enter your Region</label>
+                <div class="input-group">
+                    <input class="radio-button" type="radio" name="region" value="0"/>
+                    <label >Southeast</label>
+                    <input class="radio-button" type="radio" name="region" value="1"/>
+                    <label >Southwest</label>
+                    <input class="radio-button"  type="radio" name="region" value="2"/>
+                    <label >Northeast</label>
+                    <input class="radio-button"  type="radio" name="region" value="3"/>
+                    <label >Northwest</label>
+                </div>
+            </div>
+                <button type="submit" class="btn btn-outline-success" data-toggle="modal" data-target="#popup-dialog">Predict</button>
         </form>
     </div>
+    <script>
+        $('#popup-dialog').on('shown.bs.modal', function () {
+        // Code to run when the dialog box is shown
+        });
+
+        $('#popup-dialog').on('hidden.bs.modal', function () {
+        // Code to run when the dialog box is hidden
+        });
+
+    </script>
 {% endblock body %}

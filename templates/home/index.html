@@ -25,8 +25,6 @@
         <a href="#home">home</a>
         <a href="#services">services</a>
         <a href="#about">about</a>
-        <!-- <a href="#doctors">doctors</a> -->
-        <!-- <a href="#book">book</a> -->
         <a href="#review">review</a>
         <a href="#blogs">blogs</a>
     </nav>
@@ -68,42 +66,36 @@
             <i class="fas fa-notes-medical"></i>
             <h3>free checkups</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
         <div class="box">
             <i class="fas fa-ambulance"></i>
             <h3>24/7 ambulance</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
         <div class="box">
             <i class="fas fa-user-md"></i>
             <h3>expert doctors</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
         <div class="box">
             <i class="fas fa-pills"></i>
             <h3>medicines</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
         <div class="box">
             <i class="fas fa-procedures"></i>
             <h3>bed facility</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
         <div class="box">
             <i class="fas fa-heartbeat"></i>
             <h3>total care</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, omnis.</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
     </div>
@@ -121,14 +113,13 @@
     <div class="row">
 
         <div class="image">
-            <img src="image/about-img.svg" alt="">
+            <img src="{{ url_for('static', filename='css/home/assets/image/about-img.svg') }}" alt="">
         </div>
 
         <div class="content">
             <h3>we take care of your healthy life</h3>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure ducimus, quod ex cupiditate ullam in assumenda maiores et culpa odit tempora ipsam qui, quisquam quis facere iste fuga, minus nesciunt.</p>
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus vero ipsam laborum porro voluptates voluptatibus a nihil temporibus deserunt vel?</p>
-            <a href="#" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a>
         </div>
 
     </div>
@@ -254,23 +245,22 @@
 <section class="footer">
     <div class="box-container">
       <div class="box">
-        <h3>Contact Info</h3>
+        <h3 class="heading">Contact Info</h3>
         <div class="box-elements">
           <a href="#"><i class="fas fa-phone"></i> +91-7694819650</a>
-          <a href="#"><i class="fas fa-phone"></i> +91-9876543210</a>
+          <a href="#"><i class="fas fa-phone"></i> +91-8770610878</a>
           <a href="#"><i class="fas fa-envelope"></i> meditrack@gmail.com</a>
           <a href="#"><i class="fas fa-map-marker-alt"></i> Bhopal, India</a>
         </div>
       </div>
   
       <div class="box">
-        <h3>Follow Us</h3>
+        <h3 class="heading">Follow Us</h3>
         <div class="box-elements">
           <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
           <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
           <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
           <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
-          <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
         </div>
       </div>
     </div>

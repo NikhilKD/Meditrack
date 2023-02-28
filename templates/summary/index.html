@@ -1,8 +1,22 @@
 {% extends 'base.html' %}
 {% block body %}
-    <div class="container1" >
+    <style>
+        .container1{
+            display:flex;
+            flex-direction:column;
+            width:60%;
+            position: relative;
+            left:10%;
+            padding: 5% 0%;
+        }
+        button{
+            position: relative;
+            left: 30%;
+        }
+    </style>
+    <div class="container1">
         <h2>Prediction Report</h2>
-        <table class="table table-dark table-hover" style="margin-top:5%;width:50%">
+        <table class="table table-dark table-hover">
             <thead>
               <tr>
                 <th scope="col">Title</th>
@@ -38,6 +52,6 @@
                 </tr>
             </tbody>
           </table>
-          <a href="/get_pdf"><button class="btn btn-outline-success">Get Report</button></a>
+          <a href="/get_pdf"><button class="btn btn-outline-success">Get report by email</button></a>
     </div>
 {% endblock body %}

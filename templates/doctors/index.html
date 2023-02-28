@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+    .container1 {
+        position: relative;
+        left: 20%;
+        padding-top: 2%;
+    }
+    .btn{
+        width:60%;
+        position: relative;
+        top: 20%;
+    }
+    *{
+    font-family: 'Helvetica', sans-serif;
+    margin:0; padding: 0;
+    }
+</style>
     <div class="container1" >
-        <h2>Enter the doctor details</h2>
+        <h2>Search for the doctor</h2>
         <form method="POST">
         <div class="row">
                 <div class="col-md-4">
@@ -10,33 +26,34 @@
                 <div class="col-md-4">
                 <input type="text" class="form-control" placeholder="Enter City" name="location" aria-label="Place">
                 </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary mb-3">Search</button>
+                </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-3">Search</button>
         </form>
         <br>
-        {% if doctor|length!=0 %}
-        <h2>Doctors recommended</h2>
-        <div class="container1" style="align-items:center;overflow-y: scroll; height: 400px; overflow-x: hidden;">
-            <table class="table table-dark table-hover" >
-            <thead>
-                <tr>
-                    <th scope="col">Doctor Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Rating</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {% for i in doctor %}
-                    <tr>
-                        <th scope="row">{{i['name']}}</th>
-                        <th scope="row">{{i['vicinity']}}</th>
-                        <th scope="row">{{i['rating']}}</th>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endif %}
-
     </div>
+    {% if doctor|length!=0 %}
+    <h2>Doctors recommended</h2>
+    <div style="align-items:center;overflow-y: scroll; height: 400px; overflow-x: hidden;">
+        <table class="table table-dark table-hover" >
+        <thead>
+            <tr>
+                <th scope="col">Doctor Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for i in doctor %}
+                <tr>
+                    <th scope="row">{{i['name']}}</th>
+                    <th scope="row">{{i['vicinity']}}</th>
+                    <th scope="row">{{i['rating']}}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
 {% endblock body %}

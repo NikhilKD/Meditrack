@@ -19,6 +19,18 @@
     text-decoration: none;
 }
 
+body::-webkit-scrollbar {
+    width: 12px; 
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255);        /* color of the tracking area */
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: #16a085;    /* color of the scroll thumb */
+    border: 3px solid rgb(255, 255, 255);  /* creates padding around scroll thumb */
+  }
 html{
     font-size: 62.5%;
     overflow-x: hidden;
@@ -352,6 +364,9 @@ section:nth-child(even){
     align-items: center;
     justify-content: space-between;
 }
+.heading{
+    text-align: center;
+}
 
 .blogs .box-container .box .content .icon a{
     font-size: 1.4rem;
@@ -426,11 +441,7 @@ section:nth-child(even){
     font-weight: bold;
     margin-bottom: 1rem;
     text-align: center;
-<<<<<<< HEAD
     padding-left: 33%;
-=======
-    padding-left: 36.6%;
->>>>>>> 1c243ae00caa6ad579cb41b4be5e7afb1655d2a7
   }
   
   .footer .box-elements {
@@ -462,7 +473,7 @@ section:nth-child(even){
   .footer .credit {
     padding: 1rem;
     padding-top: 2rem;
-    margin-top: 1rem;
+    margin-top: 4rem;
     text-align: center;
     font-size: 2rem;
     color: var(--light-color);

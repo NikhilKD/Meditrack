@@ -1,23 +1,22 @@
-from flask import Flask, make_response,render_template,request,redirect,Response,send_file
-from flask_sqlalchemy import SQLAlchemy
-import pyrebase
-from werkzeug.utils import secure_filename
-import uuid
-from io import BytesIO
-from main import bone_fracture,lung_disease,diabetes_predict,insurance_pre,heart_prediction,mental_health,get_doctors
-from keys import config,email
-from flask_mail import Mail, Message
-import datetime
-import pdfkit
+from flask import Flask, make_response,render_template,request,redirect,Response,send_file 
+from flask_sqlalchemy import SQLAlchemy 
+import pyrebase 
+from werkzeug.utils import secure_filename 
+import uuid 
+from io import BytesIO 
+from keys import config,email 
+from flask_mail import Mail, Message 
+import datetime 
+import pdfkit 
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///record.db'
-app.config['SQLALCHEMY_BINDS']={'data':'sqlite:///data.db','prediction':'sqlite:///prediction.db'}
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = email['Id']
-app.config['MAIL_PASSWORD'] = email['password']
-app.config['MAIL_USE_TLS'] = False
+app = Flask(__name__) 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db' 
+app.config['SQLALCHEMY_BINDS'] = {'data':'sqlite:///data.db','prediction':'sqlite:///prediction.db'} 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com' 
+app.config['MAIL_PORT'] = 465 
+app.config['MAIL_USERNAME'] = email['Id'] 
+app.config['MAIL_PASSWORD'] = email['password'] 
+app.config['MAIL_USE_TLS'] = False 
 app.config['MAIL_USE_SSL'] = True 
 
 con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
@@ -78,17 +77,6 @@ dates={}
 def home():
     return render_template('/home/index.html')
 
-@app.route('/insurance_predict',methods=['POST'])
-def insurance_predict():
-    if request.method == 'POST' :
-        age=request.form.get("age"),
-        gender=request.form.get("gender"),
-        bmi=request.form.get("bmi"),
-        child=request.form.get("child"),
-        smoke=request.form.get("smoke"),
-        region=request.form.get("region"),
-        x=insurance_pre(int(age[0]),int(gender[0]),float(bmi[0]),int(child[0]),int(smoke[0]),int(region[0]))
-    return x
 
 # Dashbord with records of images
 @app.route("/dashboard")
@@ -163,23 +151,6 @@ def register():
     return render_template('/register/index.html')
 
 
-# upload images
-@app.route('/upload',methods=['POST'])
-def upload():
-    global user
-    if request.method == 'POST':
-        pic=request.files['file']
-        if not pic:
-            return "<h2> No Pic Uploaded</h2>" 
-        print (uuid.uuid1())
-        fileName=secure_filename(pic.filename)
-        uid=uuid.uuid1()
-        uid=str(uid)
-        img=Data(user_name=user,img=pic.read(),name=fileName,uid=uid)
-        db.session.add(img)
-        db.session.commit()
-    return redirect('/dashboard')
-
 # Prediction
 @app.route('/prediction')
 def prediction():
@@ -188,6 +159,7 @@ def prediction():
 
 @app.route('/bone_fracture',methods=['POST'])
 def result1():
+    from keras_models import bone_fracture
     if request.method == 'POST' :
         pic=request.files['file']
         pic.save('image123.jpg')
@@ -210,6 +182,7 @@ def depression():
 @app.route('/mental_predict',methods=['POST'])
 def result5():
     list1=[]
+    from keras_models import mental_health
     if request.method == 'POST':
         q1=request.form.get("question1")
         q2=request.form.get("question2")
@@ -228,7 +201,8 @@ def result5():
 
 @app.route('/heart_disease',methods=['POST'])
 def result2():
-    if request.method == 'POST' :
+    from pickle_models import heart_prediction
+    if request.method=='POST':
         age=request.form.get("age"),
         sex=request.form.get("sex"),
         cp=request.form.get("cp"),
@@ -253,7 +227,8 @@ def result2():
 
 @app.route('/diabetes',methods=['POST'])
 def result3():
-    if request.method == 'POST' :
+    from pickle_models import diabetes_predict
+    if request.method == 'POST':
         p=request.form.get("p"),
         g=request.form.get("g"),
         bp=request.form.get("bp"),
@@ -272,6 +247,7 @@ def result3():
 
 @app.route('/lung_disease',methods=['POST'])
 def result4():
+    from keras_models import lung_disease
     if request.method == 'POST' :
         pic=request.files['file']
         pic.save('lung_disease.jpg')
@@ -285,10 +261,24 @@ def result4():
     db.session.commit()
     return redirect('/summary')
 
-@app.route('/insurance')
-def insurance():
+@app.route('/insurance',methods=['POST','GET'])
+def insurance_predict():
+    global user
+    from pickle_models import insurance_pre
     x = Record.query.filter_by(user_name=user).first()
-    return render_template('/insurance/index.html',user=x)
+    ans=""
+    if request.method == 'POST' :
+        age=request.form.get("age"),
+        gender=request.form.get("gender"),
+        bmi=request.form.get("bmi"),
+        child=request.form.get("child"),
+        smoke=request.form.get("smoke"),
+        region=request.form.get("region"),
+        ans=insurance_pre(int(age[0]),int(gender[0]),float(bmi[0]),int(child[0]),int(smoke[0]),int(region[0]))
+        return render_template('/insurance/index.html',user=x,ans=ans)
+    else:
+        return render_template('/insurance/index.html',user=x)
+
 
 @app.route('/summary')
 def summary():
@@ -333,13 +323,12 @@ def get_pdf():
     response.headers['Content-Disposition']='inline; filename=report.pdf'
     message = Message("Your Report", sender='nihilkd@gmail.com', recipients=[user])
     message.attach('file.pdf', 'application/pdf', responsestring)
-
     mail.send(message)
-    return "<h2>Your Report has been set to your email address</h2>"
-
+    return "<h2>Your Report has been sent to your email address</h2>"
 
 @app.route('/doctors',methods=['POST','GET'])
 def doctors():
+    from api import get_doctors
     x = Record.query.filter_by(user_name=user).first()
     if request.method=='POST':
         location=request.form.get("location"),
@@ -350,9 +339,21 @@ def doctors():
         return render_template('/doctors/index.html',user=x)
 
 # add report
-@app.route('/add_report')
+@app.route('/add_report',methods=['POST','GET'])
 def add_report():
+    global user
     x = Record.query.filter_by(user_name=user).first()
+    if request.method == 'POST':
+        pic=request.files['file']
+        if not pic:
+            return "<h2> No Pic Uploaded</h2>" 
+        print (uuid.uuid1())
+        fileName=secure_filename(pic.filename)
+        uid=uuid.uuid1()
+        uid=str(uid)
+        img=Data(user_name=user,img=pic.read(),name=fileName,uid=uid)
+        db.session.add(img)
+        db.session.commit()
     return render_template('/upload/index.html',user=x)
 
 #profile page
