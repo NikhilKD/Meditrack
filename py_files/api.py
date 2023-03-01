@@ -1,4 +1,4 @@
-from keys import google
+from py_files.keys import google
 import googlemaps # pip install googlemaps
 
 def miles_to_meters(miles):

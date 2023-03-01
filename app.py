@@ -4,7 +4,7 @@ import pyrebase
 from werkzeug.utils import secure_filename 
 import uuid 
 from io import BytesIO 
-from keys import config,email 
+from py_files.keys import config,email 
 from flask_mail import Mail, Message 
 import datetime 
 import pdfkit 
@@ -159,7 +159,7 @@ def prediction():
 
 @app.route('/bone_fracture',methods=['POST'])
 def result1():
-    from keras_models import bone_fracture
+    from py_files.keras_models import bone_fracture
     if request.method == 'POST' :
         pic=request.files['file']
         pic.save('image123.jpg')
@@ -183,7 +183,7 @@ def depression():
 @app.route('/mental_predict',methods=['POST'])
 def result5():
     list1=[]
-    from keras_models import mental_health
+    from py_files.keras_models import mental_health
     if request.method == 'POST':
         q1=request.form.get("question1")
         q2=request.form.get("question2")
@@ -202,7 +202,7 @@ def result5():
 
 @app.route('/heart_disease',methods=['POST'])
 def result2():
-    from pickle_models import heart_prediction
+    from py_files.pickle_models import heart_prediction
     if request.method=='POST':
         age=request.form.get("age"),
         sex=request.form.get("sex"),
@@ -228,7 +228,7 @@ def result2():
 
 @app.route('/diabetes',methods=['POST'])
 def result3():
-    from pickle_models import diabetes_predict
+    from py_files.pickle_models import diabetes_predict
     if request.method == 'POST':
         p=request.form.get("p"),
         g=request.form.get("g"),
@@ -248,7 +248,7 @@ def result3():
 
 @app.route('/lung_disease',methods=['POST'])
 def result4():
-    from keras_models import lung_disease
+    from py_files.keras_models import lung_disease
     if request.method == 'POST' :
         pic=request.files['file']
         pic.save('lung_disease.jpg')
@@ -266,7 +266,7 @@ def result4():
 @app.route('/insurance',methods=['POST','GET'])
 def insurance_predict():
     global user
-    from pickle_models import insurance_pre
+    from py_files.pickle_models import insurance_pre
     x = Record.query.filter_by(user_name=user).first()
     ans=""
     if request.method == 'POST' :
@@ -330,7 +330,7 @@ def get_pdf():
 
 @app.route('/doctors',methods=['POST','GET'])
 def doctors():
-    from api import get_doctors
+    from py_files.api import get_doctors
     x = Record.query.filter_by(user_name=user).first()
     if request.method=='POST':
         location=request.form.get("location"),
