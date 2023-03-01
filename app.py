@@ -26,7 +26,7 @@ mail = Mail(app)
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-db.init_app(app)
+# db.init_app(app)
 
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
