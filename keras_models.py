@@ -14,7 +14,7 @@ def bone_fracture():
     imaga = np.expand_dims(imag,axis=0) 
     res=loaded_model.predict(imaga)
     a=res[0]
-    if a<0.5:
+    if a<0.04:
         op="Fracture"   
     else:
         op="Normal"
@@ -55,4 +55,5 @@ def mental_health(text):
         return 'Depressed'
     else:
         return "Normal"
-    
+
+print(bone_fracture())

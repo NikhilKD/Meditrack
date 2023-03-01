@@ -26,7 +26,7 @@ mail = Mail(app)
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-# db.init_app(app)
+db.init_app(app)
 
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
@@ -165,7 +165,8 @@ def result1():
         pic.save('image123.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
-    x=bone_fracture()
+        else:
+            x=bone_fracture()
     y = Prediction.query.filter_by(user_name=user).first()
     current_date = datetime.date.today()
     y.bone_fracture=x+"/"+str(current_date)
@@ -237,7 +238,7 @@ def result3():
         bmi=request.form.get("bmi"),
         dpf=request.form.get("dpf"),
         age=request.form.get("age"),
-    x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
+        x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
     y = Prediction.query.filter_by(user_name=user).first()
     current_date = datetime.date.today()
     y.diabetes=x+"/"+str(current_date)
@@ -253,7 +254,8 @@ def result4():
         pic.save('lung_disease.jpg')
         if not pic:
             return "<h2> No Pic Uploaded</h2>"
-    x=lung_disease()
+        else:
+            x=lung_disease()
     y = Prediction.query.filter_by(user_name=user).first()
     current_date = datetime.date.today()
     y.lung_disease=x+"/"+str(current_date)
@@ -354,6 +356,7 @@ def add_report():
         img=Data(user_name=user,img=pic.read(),name=fileName,uid=uid)
         db.session.add(img)
         db.session.commit()
+        return redirect('/dashboard')
     return render_template('/upload/index.html',user=x)
 
 #profile page
@@ -363,4 +366,4 @@ def profile():
     return render_template('/profile/index.html',user=x)
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=3000, debug=True)
+    app.run(host="localhost", port=4000, debug=True)
