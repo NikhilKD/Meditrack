@@ -11,7 +11,7 @@ import datetime
 import pdfkit 
 
 
-con = pdfkit.configuration(wkhtmltopdf=r'wkhtmltopdf\bin\wkhtmltopdf.exe')
+# con = pdfkit.configuration(wkhtmltopdf=r'wkhtmltopdf\bin\wkhtmltopdf.exe')
 
 
 app = Flask(__name__) 
@@ -323,7 +323,7 @@ def get_pdf():
     global con
     x = Record.query.filter_by(user_name=session['user_name']).first()
     res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
-    responsestring=pdfkit.from_string(res,False,configuration=con)
+    responsestring=pdfkit.from_string(res,False)
     response=make_response(responsestring)
     response.headers['Content-Type']='application/pdf'
     response.headers['Content-Disposition']='inline; filename=report.pdf'
