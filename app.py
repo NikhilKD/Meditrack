@@ -10,6 +10,10 @@ from flask_mail import Mail, Message
 import datetime 
 import pdfkit 
 
+
+con = pdfkit.configuration(wkhtmltopdf=r'wkhtmltopdf\bin\wkhtmltopdf.exe')
+
+
 app = Flask(__name__) 
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
 app.config['PERMANENT_SESSION_LIFETIME'] = 3600
@@ -22,14 +26,13 @@ app.config['MAIL_PASSWORD'] = email['password']
 app.config['MAIL_USE_TLS'] = False 
 app.config['MAIL_USE_SSL'] = True 
 
-# con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
-# wkhtmltopdf\bin\wkhtmltopdf.exe
+
 
 mail = Mail(app)
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-db.init_app(app)
+# db.init_app(app)
 
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
@@ -314,19 +317,19 @@ def summary():
 
 @app.route('/get_pdf')
 def get_pdf():
-    # global predictions
-    # global dates
-    # global user
-    # global con
-    # x = Record.query.filter_by(user_name=session['user_name']).first()
-    # res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
-    # responsestring=pdfkit.from_string(res,False,configuration=con)
-    # response=make_response(responsestring)
-    # response.headers['Content-Type']='application/pdf'
-    # response.headers['Content-Disposition']='inline; filename=report.pdf'
-    # message = Message("Your Report", sender='nihilkd@gmail.com', recipients=[user])
-    # message.attach('file.pdf', 'application/pdf', responsestring)
-    # mail.send(message)
+    predictions=session['predictions']
+    dates=session['date']
+    user=session['user_name']
+    global con
+    x = Record.query.filter_by(user_name=session['user_name']).first()
+    res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
+    responsestring=pdfkit.from_string(res,False,configuration=con)
+    response=make_response(responsestring)
+    response.headers['Content-Type']='application/pdf'
+    response.headers['Content-Disposition']='inline; filename=report.pdf'
+    message = Message("Your Report", sender='nihilkd@gmail.com', recipients=[user])
+    message.attach('file.pdf', 'application/pdf', responsestring)
+    mail.send(message)
     return "<h2>Your Report has been sent to your email address</h2>"
 
 @app.route('/doctors',methods=['POST','GET'])

@@ -8,17 +8,14 @@ from keras_preprocessing.sequence import pad_sequences
 import pandas as pd # pip install pandas
 
 def bone_fracture():
-    loaded_model=load_model("pred_models/best_model.h5")
-    img = load_img('image123.jpg',target_size=(224,224))
-    imag = img_to_array(img)
-    imaga = np.expand_dims(imag,axis=0) 
-    res=loaded_model.predict(imaga)
-    a=res[0]
-    if a<0.04:
-        op="Fracture"   
-    else:
-        op="Normal"
-    return str(op)
+    check='image123.jpg'
+    model=load_model("pred_models/Fracture.h5",compile=False)
+    img=load_img(check, target_size=(150, 150), grayscale=True)
+    img=np.array(img)/255
+    img=img.reshape(-1,150,150,1)
+    isfrac=model.predict(img)[0]
+    imgClass='Fracture' if isfrac<0.5 else 'Normal'
+    return imgClass
 
 
 def lung_disease():
