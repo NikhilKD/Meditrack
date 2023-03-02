@@ -19,7 +19,7 @@ app.config['MAIL_PASSWORD'] = email['password']
 app.config['MAIL_USE_TLS'] = False 
 app.config['MAIL_USE_SSL'] = True 
 
-con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+# con = pdfkit.configuration(wkhtmltopdf='wkhtmltopdf\\bin\\wkhtmltopdf.exe')
 # wkhtmltopdf\bin\wkhtmltopdf.exe
 
 mail = Mail(app)
@@ -313,19 +313,19 @@ def summary():
 
 @app.route('/get_pdf')
 def get_pdf():
-    global predictions
-    global dates
-    global user
-    global con
-    x = Record.query.filter_by(user_name=user).first()
-    res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
-    responsestring=pdfkit.from_string(res,False,configuration=con)
-    response=make_response(responsestring)
-    response.headers['Content-Type']='application/pdf'
-    response.headers['Content-Disposition']='inline; filename=report.pdf'
-    message = Message("Your Report", sender='nihilkd@gmail.com', recipients=[user])
-    message.attach('file.pdf', 'application/pdf', responsestring)
-    mail.send(message)
+    # global predictions
+    # global dates
+    # global user
+    # global con
+    # x = Record.query.filter_by(user_name=user).first()
+    # res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
+    # responsestring=pdfkit.from_string(res,False,configuration=con)
+    # response=make_response(responsestring)
+    # response.headers['Content-Type']='application/pdf'
+    # response.headers['Content-Disposition']='inline; filename=report.pdf'
+    # message = Message("Your Report", sender='nihilkd@gmail.com', recipients=[user])
+    # message.attach('file.pdf', 'application/pdf', responsestring)
+    # mail.send(message)
     return "<h2>Your Report has been sent to your email address</h2>"
 
 @app.route('/doctors',methods=['POST','GET'])
