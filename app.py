@@ -1,15 +1,18 @@
-from flask import Flask, make_response,render_template,request,redirect,Response,send_file 
+from flask import Flask, make_response,render_template,request,redirect,Response,send_file,session 
 from flask_sqlalchemy import SQLAlchemy 
 import pyrebase 
 from werkzeug.utils import secure_filename 
 import uuid 
 from io import BytesIO 
-from py_files.keys import config,email 
+from py_files.keys import config,email
+import os 
 from flask_mail import Mail, Message 
 import datetime 
 import pdfkit 
 
 app = Flask(__name__) 
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
+app.config['PERMANENT_SESSION_LIFETIME'] = 3600
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///record.db' 
 app.config['SQLALCHEMY_BINDS'] = {'data':'sqlite:///data.db','prediction':'sqlite:///prediction.db'} 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com' 
@@ -26,7 +29,7 @@ mail = Mail(app)
 db=SQLAlchemy(app)
 app.config['UPLOAD_FOLDER'] = ''
 
-# db.init_app(app)
+db.init_app(app)
 
 firebase = pyrebase.initialize_app(config)
 auth=firebase.auth()
@@ -68,9 +71,7 @@ class Prediction(db.Model):
 with app.app_context():
     db.create_all()
 
-user="Nikhil"
-predictions={}
-dates={}
+
 
 # Home Page
 @app.route("/")
@@ -81,9 +82,9 @@ def home():
 # Dashbord with records of images
 @app.route("/dashboard")
 def dashboard():
-    global user
-    x = Record.query.filter_by(user_name=user).first()
-    img=Data.query.filter_by(user_name=user).all()
+    # global user
+    x = Record.query.filter_by(user_name=session['user_name']).first()
+    img=Data.query.filter_by(user_name=session['user_name']).all()
     return render_template('/dashboard/index.html',user=x,img=img)
 
 @app.route('/download/<string:uid>')
@@ -95,24 +96,26 @@ def download(uid):
 @app.route("/signUp",methods =["GET","POST"])
 def signUp():
     if request.method == "POST":
-        global user
+        # global user
         user=request.form.get("femail")
         auth.create_user_with_email_and_password(
         email=user,
         password=request.form.get("fpassword"),
         )
+        session['user_name']=user
         return redirect('/register')
     return render_template('/login/index.html')
 
 @app.route("/signIn",methods =["GET","POST"])
 def signIn():
     if request.method == "POST":
-        global user
+        # global user
         user=request.form.get("femail")
         auth.sign_in_with_email_and_password(
         email=user,
         password=request.form.get("fpassword")
         )
+        session['user_name']=user
         return redirect('/dashboard')
     return render_template('/login/index.html')
 
@@ -120,10 +123,10 @@ def signIn():
 # register page
 @app.route("/register",methods =["GET", "POST"])
 def register():
+    user=session['user_name']
     if request.method =='POST':
-        global user
         record=Record(
-            user_name=user,
+            user_name=session['user_name'],
             name=request.form.get("fname"),
             address=request.form.get("faddress"),
             city=request.form.get("fcity"),
@@ -136,7 +139,7 @@ def register():
             job=request.form.get("fjob")
         )
         predict=Prediction(
-            user_name=user,
+            user_name=session['user_name'],
             diabetes="null/null",
             depression="null/null",
             bone_fracture="null/null",
@@ -154,7 +157,7 @@ def register():
 # Prediction
 @app.route('/prediction')
 def prediction():
-    x = Record.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
     return render_template('/prediction/index.html',user=x)
 
 @app.route('/bone_fracture',methods=['POST'])
@@ -167,7 +170,7 @@ def result1():
             return "<h2> No Pic Uploaded</h2>"
         else:
             x=bone_fracture()
-    y = Prediction.query.filter_by(user_name=user).first()
+    y = Prediction.query.filter_by(user_name=session['user_name']).first()
     current_date = datetime.date.today()
     y.bone_fracture=x+"/"+str(current_date)
     db.session.add(y)
@@ -177,7 +180,7 @@ def result1():
 #mental health
 @app.route('/mental_health')
 def depression():
-    x = Record.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
     return render_template('/mental/index.html',user=x)
 
 @app.route('/mental_predict',methods=['POST'])
@@ -193,7 +196,7 @@ def result5():
         list1.append([str(q3)])
     print(list1)
     x=mental_health(list1)
-    y = Prediction.query.filter_by(user_name=user).first()
+    y = Prediction.query.filter_by(user_name=session['user_name']).first()
     current_date = datetime.date.today()
     y.depression=x+"/"+str(current_date)
     db.session.add(y)
@@ -219,7 +222,7 @@ def result2():
         thal=request.form.get("thal"),
         print(age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,old,slope,ca,thal)
     x=heart_prediction(int(age[0]),int(sex[0]),int(cp[0]),int(trestbps[0]),int(chol[0]),int(fbs[0]),int(restecg[0]),int(thalach[0]),int(exang[0]),float(old[0]),int(slope[0]),int(ca[0]),int(thal[0]))
-    y = Prediction.query.filter_by(user_name=user).first()
+    y = Prediction.query.filter_by(user_name=session['user_name']).first()
     current_date = datetime.date.today()
     y.heart_prediction=x+"/"+str(current_date)
     db.session.add(y)
@@ -239,7 +242,7 @@ def result3():
         dpf=request.form.get("dpf"),
         age=request.form.get("age"),
         x=diabetes_predict(int(p[0]),int(g[0]),int(bp[0]),int(st[0]),int(insulin[0]),float(bmi[0]),float(dpf[0]),int(age[0]))
-    y = Prediction.query.filter_by(user_name=user).first()
+    y = Prediction.query.filter_by(user_name=session['user_name']).first()
     current_date = datetime.date.today()
     y.diabetes=x+"/"+str(current_date)
     db.session.add(y)
@@ -256,7 +259,7 @@ def result4():
             return "<h2> No Pic Uploaded</h2>"
         else:
             x=lung_disease()
-    y = Prediction.query.filter_by(user_name=user).first()
+    y = Prediction.query.filter_by(user_name=session['user_name']).first()
     current_date = datetime.date.today()
     y.lung_disease=x+"/"+str(current_date)
     db.session.add(y)
@@ -265,10 +268,10 @@ def result4():
 
 @app.route('/insurance',methods=['POST','GET'])
 def insurance_predict():
-    global user
     from py_files.pickle_models import insurance_pre
-    x = Record.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
     ans=""
+    user=session['user_name']
     if request.method == 'POST' :
         age=request.form.get("age"),
         gender=request.form.get("gender"),
@@ -284,10 +287,8 @@ def insurance_predict():
 
 @app.route('/summary')
 def summary():
-    global predictions
-    global dates
-    x = Record.query.filter_by(user_name=user).first()
-    y = Prediction.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
+    y = Prediction.query.filter_by(user_name=session['user_name']).first()
     bone_fracture=y.bone_fracture.split('/')
     diabetes=y.diabetes.split('/')
     lung_disease=y.lung_disease.split('/')
@@ -307,8 +308,8 @@ def summary():
         'heart_prediction':heart_prediction[1],
         'depression':depression[1],
     }
-    predictions=predict
-    dates=date
+    session['predictions']=predict
+    session['date']=date
     return render_template('/summary/index.html',user=x,predict=predict,date=date)
 
 @app.route('/get_pdf')
@@ -317,7 +318,7 @@ def get_pdf():
     # global dates
     # global user
     # global con
-    # x = Record.query.filter_by(user_name=user).first()
+    # x = Record.query.filter_by(user_name=session['user_name']).first()
     # res=render_template('/pdf/index.html',predict=predictions,date=dates,profile=x)
     # responsestring=pdfkit.from_string(res,False,configuration=con)
     # response=make_response(responsestring)
@@ -331,7 +332,7 @@ def get_pdf():
 @app.route('/doctors',methods=['POST','GET'])
 def doctors():
     from py_files.api import get_doctors
-    x = Record.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
     if request.method=='POST':
         location=request.form.get("location"),
         doc=request.form.get("doc")
@@ -343,8 +344,7 @@ def doctors():
 # add report
 @app.route('/add_report',methods=['POST','GET'])
 def add_report():
-    global user
-    x = Record.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
     if request.method == 'POST':
         pic=request.files['file']
         if not pic:
@@ -353,7 +353,7 @@ def add_report():
         fileName=secure_filename(pic.filename)
         uid=uuid.uuid1()
         uid=str(uid)
-        img=Data(user_name=user,img=pic.read(),name=fileName,uid=uid)
+        img=Data(user_name=session['user_name'],img=pic.read(),name=fileName,uid=uid)
         db.session.add(img)
         db.session.commit()
         return redirect('/dashboard')
@@ -362,7 +362,7 @@ def add_report():
 #profile page
 @app.route('/profile')
 def profile():
-    x = Record.query.filter_by(user_name=user).first()
+    x = Record.query.filter_by(user_name=session['user_name']).first()
     return render_template('/profile/index.html',user=x)
 
 if __name__ == "__main__":
