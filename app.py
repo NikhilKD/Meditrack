@@ -11,9 +11,6 @@ import datetime
 import pdfkit 
 
 
-# con = pdfkit.configuration(wkhtmltopdf=r'wkhtmltopdf\bin\wkhtmltopdf.exe')
-
-
 app = Flask(__name__) 
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
 app.config['PERMANENT_SESSION_LIFETIME'] = 3600
