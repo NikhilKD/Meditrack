@@ -10,7 +10,7 @@ from flask_mail import Mail, Message
 import datetime 
 import pdfkit 
 
-#fghjhgf
+
 app = Flask(__name__) 
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback_secret_key')
 app.config['PERMANENT_SESSION_LIFETIME'] = 3600
