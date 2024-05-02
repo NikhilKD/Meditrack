@@ -216,6 +216,28 @@ section:nth-child(even){
     border:var(--border);
     padding: 2.5rem;
 }
+.services .box-container .box:hover {
+    background-color: var(--green); /* Change to desired hover color */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+    color:#ffff;
+}
+.services .box-container .box:hover i{
+    color: #000;
+    font-size: 5rem;
+    padding-bottom: .5rem;
+}
+
+.services .box-container .box:hover h3{
+    color: #ffff;
+    font-size: 2.5rem;
+    padding:1rem 0;
+}
+
+.services .box-container .box:hover p{
+    color: #ffff;
+    font-size: 1.4rem;
+    line-height: 2;
+}
 
 .services .box-container .box i{
     color: var(--green);
@@ -258,7 +280,7 @@ section:nth-child(even){
     color: var(--black);
     text-shadow: var(--text-shadow);
     font-size: 4rem;
-    line-height: 1.8;
+    line-height: 1.4;
 }
 
 .about .row .content p{
