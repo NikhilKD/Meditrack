@@ -71,8 +71,6 @@ class Prediction(db.Model):
 with app.app_context():
     db.create_all()
 
-
-
 # Home Page
 @app.route("/")
 def home():
